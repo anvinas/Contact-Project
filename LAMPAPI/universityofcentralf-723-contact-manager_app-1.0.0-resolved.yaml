@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  description: This is the API documentation for the COP 4331 Demo Contact App
+  version: 1.0.0
+  title: Contact Manager App
+  contact:
+    email: Richard.Leinecker@ucf.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: retro-reach.online
+basePath: /LAMPAPI
+schemes:
+- http
+paths:
+  /Login.php:
+    post:
+      tags:
+      - Users
+      summary: Logs in to the colors app
+      description: Logs in to colors app
+      operationId: dlLogin
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login
+        required: false
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: URL Not Found
+        "500":
+          description: Server Error
+  /AddContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Adds a contact
+      description: Adds a new contact to the Contacts table for a user
+      operationId: addContact
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: contactItem
+        description: Contact to add
+        required: false
+        schema:
+          $ref: '#/definitions/Contact'
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: URL Not Found
+        "500":
+          description: Server Error
+definitions:
+  Login:
+    type: object
+    required:
+    - login
+    - password
+    properties:
+      login:
+        type: string
+        example: fred
+      password:
+        type: string
+        example: secret
+  Contact:
+    type: object
+    required:
+    - email
+    - firstName
+    - lastName
+    - phone
+    - userId
+    properties:
+      userId:
+        type: integer
+        example: 1
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+      phone:
+        type: string
+        example: 407-123-4567
+      email:
+        type: string
+        example: john.doe@example.com
