@@ -9,7 +9,7 @@ $user_input_password = $inData["password"];
 $user_input_email = $inData["email"];
 $user_input_phone_number = $inData["phoneNumber"]; // not used yet
 
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
 if ($conn->connect_error) {
     returnWithError($conn->connect_error);
