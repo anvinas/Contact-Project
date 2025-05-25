@@ -7,7 +7,7 @@ $lastName = $inData["lastName"];
 $user_input_login = $inData["login"];
 $user_input_password = $inData["password"];
 $user_input_email = $inData["email"];
-$user_input_phone_number = $inData["phoneNumber"]; // not used yet
+$user_input_phone_number = $inData["phoneNumber"];
 
 $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
@@ -29,14 +29,14 @@ if ($conn->connect_error) {
         $stmt->execute();
         $stmt->close();
 
-        returnWithError(""); // success
+        returnWithError(""); 
     }
 
     $check_exist->close();
     $conn->close();
 }
 
-// === Helper Functions ===
+
 function getRequestInfo() {
     return json_decode(file_get_contents('php://input'), true);
 }
