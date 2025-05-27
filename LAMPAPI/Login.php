@@ -1,4 +1,6 @@
 <?php
+
+	session_start();
 	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
 	$inData = getRequestInfo();
@@ -21,6 +23,7 @@
 
 		if( $row = $result->fetch_assoc()  )
 		{
+			$_SESSION["userID"] = $row["ID"];
 			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
 		}
 		else
