@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>User's Contacts</title>
+	<script type="text/javascript" src="js/code.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	
+	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() 
+	{
+		readCookie();
+	}, false);
+	</script>
+	
+</head>
+<body>
+
+<h1 id="title">Contacts</h1>
+
+<div id="loggedInDiv">
+	<span id="userName"></span><br />
+	<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
+</div>
+
+<div id="accessUIDiv">
+	<br />
+
+	<input type="text" id="searchContact" placeholder="Contact To Search For"/>
+	<button type="button" id="searchContactButton" class="buttons" onclick="searchContact();"> Search Contact </button><br />
+	<span id="contactSearchResult"></span>
+	<p id="contactList">
+	</p><br /><br />
+
+	<input type="Enter First Name" id="FirstNameInput" placeholder="Enter First Name">
+	<input type="Enter Last Name" id="LastNameInput" placeholder="Enter Last Name">
+	<input type="Enter Phone Number" id="PhoneInput" placeholder="Enter Phone Number">
+	<input type="Enter Last Email" id="EmailInput" placeholder="Enter Email">
+	<button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
+	<span id="contactAddResult"></span>
+	
+</div>
+
+</body>
+</html>
