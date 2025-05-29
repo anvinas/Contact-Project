@@ -1,6 +1,5 @@
 //const urlBase = 'http://127.0.0.1:5500/User_Contacts.html/LAMPAPI';
 const urlBase = 'http://retro-reach.online/LAMPAPI';;
-
 const extension = 'php';
 
 let userId = 0;
@@ -73,7 +72,6 @@ function doLogout()
 
 
 
-
 function searchContact()
 {
 
@@ -96,7 +94,7 @@ function searchContact()
 
 
 	//let tmp = {search:srch,userId:userId};
-	let tmp = {firstName: firstName, lastName: lastName, userId:userId};
+	let tmp = {search: srch};
 
 	let jsonPayload = JSON.stringify( tmp );
 
@@ -113,10 +111,12 @@ function searchContact()
 			{
 				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
+				console.log("Response from PHP:", jsonObject); //Php debugging
 				
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					contactList += jsonObject.results[i];
+					let c = jsonObject.results[i];
+					contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
 					if( i < jsonObject.results.length - 1 )
 					{
 						contactList += "<br />\r\n";
@@ -130,7 +130,7 @@ function searchContact()
 	}
 	catch(err)
 	{
-		document.getElementById("contactSearchResult").innerHTML = err.message;
+		document.getElementById("tactSearchResult").innerHTML = err.message;
 	}
 	
 }
@@ -139,6 +139,7 @@ function searchContact()
 
 function addContact()
 {
+	/*
 	let newColor = document.getElementById("ContactInput").value;
 	document.getElementById("contactAddResult").innerHTML = "";
 	
@@ -163,37 +164,68 @@ function addContact()
 	};
 
 	console.log(contactInfo);
-	
-	let tmp = {color:contactInfo,userId,userId};
-	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/AddContact.' + extension;
+	*/
+	let firstName = document.getElementById("FirstNameInput").value;
+	document.getElementById("contactAddResult").innerHTML = "";
+
+	let lastName = document.getElementById("LastNameInput").value;
+	let phoneNumber = document.getElementById("PhoneInput").value;
+	let email = document.getElementById("EmailInput").value;
+
+
+
+
+	if(firstName == null || firstName == ""){
+		console.log("No first name");
+	}
 	
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try
+	else
+	
+	if(lastName == null || lastName == ""){
+		console.log("No last name");
+	}
+	
+	else
+	
+	if(Number(phoneNumber) == NaN || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == ""){
+		console.log("Invalid Phone Number");
+	}
+
+	else
+	
+	if(email == null || email == "" || email.includes("@") == false){
+		console.log("No Email");
+	}
+
+	else
 	{
-		xhr.onreadystatechange = function() 
+		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email, userId:userId};
+		let jsonPayload = JSON.stringify( tmp );
+
+		let url = urlBase + '/AddContact.' + extension;
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		try
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			xhr.onreadystatechange = function() 
 			{
-				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-			}
-		};
-		xhr.send(jsonPayload);
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+				}
+			};
+			xhr.send(jsonPayload);
+		}
+		catch(err)
+		{
+			document.getElementById("contactAddResult").innerHTML = err.message;
+		}
 	}
-	catch(err)
-	{
-		document.getElementById("contactAddResult").innerHTML = err.message;
-	}
-
 	
 }
-
-
-
-
 
 
 
@@ -207,8 +239,8 @@ function saveCookie()
 
 function readCookie()
 {
-	//userId = -1;
-    userId = 0;
+	userId = -1;
+    //userId = 0;
 
 	let data = document.cookie;
 	let splits = data.split(",");
