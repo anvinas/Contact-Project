@@ -2,6 +2,11 @@
 
     //This php file lets a user remove a contact
 
+    // CORS headers
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
     session_start();
     $conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); //Database login
 

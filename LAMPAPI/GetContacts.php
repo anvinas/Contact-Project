@@ -2,6 +2,11 @@
 
     //This php file returns contacts for a specific userID
 
+    // CORS headers
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: Content-Type");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
     session_start();
 
     //Scans userID from session

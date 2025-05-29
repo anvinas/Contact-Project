@@ -18,6 +18,11 @@ $search = trim($inData["search"]);
 
 $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
+if ($search === ""){
+	returnWithError("Search is empty!!");
+	exit();
+}
+
 if ($conn->connect_error) {
 	returnWithError($conn->connect_error);
 	exit();
@@ -27,7 +32,6 @@ $searchFirstLast = explode(" ", $search);
 if (count($searchFirstLast) === 2) {
 	$first = "%" . $searchFirstLast[0] . "%";
 	$last  = "%" . $searchFirstLast[1] . "%";
-
 	$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
 	$stmt->bind_param("ssi", $first, $last, $userID);
 } else {
