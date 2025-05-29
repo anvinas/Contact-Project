@@ -109,7 +109,7 @@
 	}
 
 	function addContact()
-{
+	{
 	let firstName = document.getElementById("contactFirstName").value;
 	document.getElementById("contactAddResult").innerHTML = "";
 	//Output result of contact added later
@@ -154,9 +154,9 @@
 
 	else
 	{	
-		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email, userId:userId};
+		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
 		let jsonPayload = JSON.stringify( tmp );
-
+		console.log(jsonPayload);
 		let url = urlBase + '/AddContact.' + extension;
 		
 		let xhr = new XMLHttpRequest();
@@ -169,6 +169,7 @@
 				if (this.readyState == 4 && this.status == 200) 
 				{
 					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+					console.log(xhr.responseText);
 				}
 			};
 			xhr.send(jsonPayload);
@@ -179,7 +180,7 @@
 		}
 	}
 	
-}	
+	}	
 
 	function searchContact()
 	{
