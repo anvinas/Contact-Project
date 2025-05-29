@@ -92,7 +92,6 @@ function searchContact()
 		console.log("No last name");
 	}
 
-
 	//let tmp = {search:srch,userId:userId};
 	let tmp = {first_name: firstName, last_name: lastName, userId:userId};
 
@@ -137,33 +136,6 @@ function searchContact()
 
 function addContact()
 {
-	/*
-	let newColor = document.getElementById("ContactInput").value;
-	document.getElementById("contactAddResult").innerHTML = "";
-	
-	let inputText = newColor.split(" ");
-	let firstName = inputText[0];
-	let lastName = inputText[1];
-
-	if(firstName == null || firstName == ""){
-		console.log("No first name");
-	}
-
-	if(lastName == null || lastName == ""){
-		console.log("No last name");
-	}
-
-	let contactInfo = 
-	{
-
-		first_name: inputText[0],
-		last_name: inputText[1]
-
-	};
-
-	console.log(contactInfo);
-
-	*/
 	let firstName = document.getElementById("FirstNameInput").value;
 	document.getElementById("contactAddResult").innerHTML = "";
 
@@ -171,33 +143,42 @@ function addContact()
 	let phoneNumber = document.getElementById("PhoneInput").value;
 	let email = document.getElementById("EmailInput").value;
 
-
-
-
-	if(firstName == null || firstName == ""){
+	//Validate first name input
+	if(firstName == null || firstName == "") 
+	{
 		console.log("No first name");
 	}
 	
 	else
-	
-	if(lastName == null || lastName == ""){
-		console.log("No last name");
+	//Validate last name input
+	if(lastName == null || lastName == "")
+	{
+			console.log("No last name");
 	}
 	
 	else
-	
-	if(Number(phoneNumber) == NaN || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == ""){
+	// Validate phone number
+	if(Number(phoneNumber) == NaN || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
+	{
 		console.log("Invalid Phone Number");
 	}
 
 	else
-	
-	if(email == null || email == "" || email.includes("@") == false){
-		console.log("No Email");
+	//Validate parts around "@" in email
+	if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
+	{
+		console.log("Invalid Email");
 	}
 
 	else
+	//Vlaidate parts around the "." in email
+	if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
 	{
+			console.log("Invalid Email. Needs proper address");
+	}
+
+	else
+	{	
 		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email, userId:userId};
 		let jsonPayload = JSON.stringify( tmp );
 
@@ -237,8 +218,8 @@ function saveCookie()
 
 function readCookie()
 {
-	userId = -1;
-    //userId = 0;
+	//userId = -1;
+    userId = 0;
 
 	let data = document.cookie;
 	let splits = data.split(",");
