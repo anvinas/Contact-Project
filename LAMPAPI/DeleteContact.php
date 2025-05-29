@@ -18,10 +18,10 @@
 
 // --- Database Configuration ---
 $servername = "localhost"; // Replace with your database server name (e.g., "127.0.0.1")
-$username = "your_username";   // Replace with your database username
-$password = "your_password";   // Replace with your database password
-$dbname = "your_database";     // Replace with your database name
-$tableName = "users";          // The name of your users table
+$username = "Retro";   // Replace with your database username
+$password = "Reach";   // Replace with your database password
+$dbname = "COP 4331";     // Replace with your database name
+$tableName = "Users";          // The name of your users table
 
 // --- Response Array ---
 $response = array(
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = "Valid User ID is required.";
     } else {
         // --- Create database connection ---
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
         // Check connection
         if ($conn->connect_error) {
