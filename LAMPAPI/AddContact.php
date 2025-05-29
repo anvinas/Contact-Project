@@ -1,25 +1,22 @@
 <?php
 
-	//This php file lets user add a contact
+	session_start(); // Session for ID serverside caching
 
 	// CORS headers
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: Content-Type");
 	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-	
-	session_start();
 
-	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
 	$inData = getRequestInfo();
 
-	if (!isset($_SESSION["userId"])) 
+	//Correct user logged in check
+	if (!isset($_SESSION["userID"])) 
 	{
     	returnWithError("User not logged in.");
     	exit();
 	}
 	
-	$login = $inData["login"];
 	$userId = $_SESSION["userID"];
 	$firstName = $inData["firstName"];
 	$lastName = $inData["lastName"];
@@ -40,9 +37,8 @@
 		
 		if ($stmt->execute()) 
 		{
-        	returnWithInfo("Contact added successfully for user $userId.");
+        	returnWithError("Contact added successfully for user $userId.");
     	} 
-		
 		else 
 		{
        		returnWithError($stmt->error);
@@ -50,7 +46,6 @@
 		
 		$stmt->close();
 		$conn->close();
-		returnWithError("");
 	}
 
 	function getRequestInfo()

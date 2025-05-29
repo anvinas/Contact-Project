@@ -1,97 +1,71 @@
 <?php
 
-/**
- * delete_user.php
- *
- * This script deletes a user from the database based on the provided user_id.
- * It expects data to be sent via a POST request.
- *
- * IMPORTANT:
- * 1. Replace placeholder database credentials with your actual credentials.
- * 2. Ensure you have a database table (e.g., 'users') with an 'id' column
- * that uniquely identifies users.
- * 3. This script uses MySQLi with prepared statements to prevent SQL injection.
- * 4. For a real-world application, you would add more robust error handling,
- * input validation, and user authentication/authorization (e.g., ensuring
- * the person making the request has permission to delete the user).
- */
+    session_start();
+    //This php file lets a user remove a contact
 
-// --- Database Configuration ---
-$servername = "localhost"; // Replace with your database server name (e.g., "127.0.0.1")
-$username = "Retro";   // Replace with your database username
-$password = "Reach";   // Replace with your database password
-$dbname = "COP 4331";     // Replace with your database name
-$tableName = "Users";          // The name of your users table
+    // CORS headers
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-// --- Response Array ---
-$response = array(
-    'status' => 'error',
-    'message' => 'An unexpected error occurred.'
-);
+    
+    $conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); //Database login
 
-// --- Check if the request method is POST ---
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // --- Get POST data ---
-    // Ensure user_id is provided and is an integer
-    $userId = isset($_POST['user_id']) ? filter_var(trim($_POST['user_id']), FILTER_VALIDATE_INT) : null;
-
-    // --- Basic Validation ---
-    if ($userId === false || $userId === null) { // filter_var returns false on failure, null if not set
-        $response['message'] = "Valid User ID is required.";
-    } else {
-        // --- Create database connection ---
-        $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
-
-        // Check connection
-        if ($conn->connect_error) {
-            // Log error to server log instead of exposing details to client in production
-            error_log("Connection failed: " . $conn->connect_error);
-            $response['message'] = "Database connection failed. Please try again later.";
-        } else {
-            // --- Prepare SQL statement ---
-            // SQL query to delete a user by their ID
-            $sql = "DELETE FROM " . $tableName . " WHERE id = ?";
-
-            // --- Prepare and bind ---
-            $stmt = $conn->prepare($sql);
-
-            if ($stmt) {
-                // 'i' specifies the variable type is integer
-                $stmt->bind_param("i", $userId);
-
-                // --- Execute the statement ---
-                if ($stmt->execute()) {
-                    if ($stmt->affected_rows > 0) {
-                        $response['status'] = 'success';
-                        $response['message'] = 'User deleted successfully.';
-                    } else {
-                        // Query executed, but no rows were deleted.
-                        // This usually means the user ID was not found.
-                        $response['status'] = 'info';
-                        $response['message'] = 'No user found with the provided ID, or user was already deleted.';
-                    }
-                } else {
-                    // Log error to server log
-                    error_log("Error executing statement: " . $stmt->error);
-                    $response['message'] = "Error deleting user: " . $stmt->error; // Provide a generic error in production
-                }
-                $stmt->close();
-            } else {
-                // Log error to server log
-                error_log("Error preparing statement: " . $conn->error);
-                $response['message'] = "Error preparing database query.";
-            }
-            $conn->close();
-        }
+    if (!isset($_SESSION["userID"])) 
+    {
+        returnWithError("User not logged in"); 
+        exit();
     }
-} else {
-    $response['message'] = "Invalid request method. Please use POST.";
-}
 
-// --- Send JSON response ---
-header('Content-Type: application/json');
-echo json_encode($response);
-exit();
+    $userID = $_SESSION("userID");
+    $inData = getRequestInfo();
+    $firstName = $inData["firstName"];
+    $lastName = $inData["lastName"];
+    $phone = $inData["phone"];
+    $email = $inData["email"];
+    $contactId = $inData["contactId"];
 
+    if ($conn->connect_error)
+    {
+        returnWithError($conn->connect_error);
+    }
+    else
+    {
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?"); 
+        $stmt = $stmt->bind_param("ii", $contactId, $userID);
+
+        if ($stmt->affected_rows > 0){
+            returnWithInfo("Contact with $contactId deleted successfully");
+        }
+        else
+        {
+            returnWithError("No matching contact");
+        }
+
+        $stmt->close();
+        $conn->close(); 
+    }
+
+    function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
+
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+		
+	function returnWithError( $err )
+	{
+		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+		
+	function returnWithInfo( $searchResults )
+	{
+		$retValue = '{"results":[' . $searchResults . '],"error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
 ?>
