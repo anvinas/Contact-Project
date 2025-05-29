@@ -46,7 +46,7 @@
 
 					saveCookie();
 		
-					window.location.href = "color.html";
+					window.location.href = "User_Contacts.html";
 				}
 			};
 			xhr.send(jsonPayload);
@@ -142,14 +142,14 @@
 	function searchColor()
 	{
 		let srch = document.getElementById("searchText").value;
-		document.getElementById("colorSearchResult").innerHTML = "";
+		document.getElementById("contactSearchResult").innerHTML = "";
 		
-		let colorList = "";
+		let contactList = "";
 
-		let tmp = {search:srch,userId:userId};
+		let tmp = {search:srch};
 		let jsonPayload = JSON.stringify( tmp );
 
-		let url = urlBase + '/SearchColors.' + extension;
+		let url = urlBase + '/SearchContact.' + extension;
 		
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
@@ -160,26 +160,36 @@
 			{
 				if (this.readyState == 4 && this.status == 200) 
 				{
-					document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
+					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
 					let jsonObject = JSON.parse( xhr.responseText );
 					
+					console.log("Response from PHP:", jsonObject); //Php debugging
+
 					for( let i=0; i<jsonObject.results.length; i++ )
 					{
-						colorList += jsonObject.results[i];
+						let c = jsonObject.results[i];
+
+						contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
 						if( i < jsonObject.results.length - 1 )
 						{
-							colorList += "<br />\r\n";
+							contactList += "<br />\r\n";
 						}
+						
+						//contactList += jsonObject.results[i];
+						//if( i < jsonObject.results.length - 1 )
+						//{
+						//	contactList += "<br />\r\n";
+						//}
 					}
 					
-					document.getElementsByTagName("p")[0].innerHTML = colorList;
+					document.getElementsByTagName("p")[0].innerHTML = contactList;
 				}
 			};
 			xhr.send(jsonPayload);
 		}
 		catch(err)
 		{
-			document.getElementById("colorSearchResult").innerHTML = err.message;
+			document.getElementById("contactSearchResult").innerHTML = err.message;
 		}
 		
 	}
