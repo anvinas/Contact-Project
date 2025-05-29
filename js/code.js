@@ -93,7 +93,7 @@ function searchContact()
 	}
 
 	//let tmp = {search:srch,userId:userId};
-	let tmp = {first_name: firstName, last_name: lastName, userId:userId};
+	let tmp = {search: srch};
 
 	let jsonPayload = JSON.stringify( tmp );
 
@@ -111,9 +111,13 @@ function searchContact()
 				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText );
 				
+				console.log("Response from PHP:", jsonObject); //Php debugging
+
 				for( let i=0; i<jsonObject.results.length; i++ )
 				{
-					contactList += jsonObject.results[i];
+					let c = jsonObject.results[i];
+
+					contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
 					if( i < jsonObject.results.length - 1 )
 					{
 						contactList += "<br />\r\n";
