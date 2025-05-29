@@ -1,6 +1,13 @@
 <?php
 
 	session_start();
+
+	//CORS headers
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
+
 	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
 	$inData = getRequestInfo();
