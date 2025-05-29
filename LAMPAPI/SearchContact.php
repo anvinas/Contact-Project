@@ -27,11 +27,12 @@ $searchFirstLast = explode(" ", $search);
 if (count($searchFirstLast) === 2) {
 	$first = "%" . $searchFirstLast[0] . "%";
 	$last  = "%" . $searchFirstLast[1] . "%";
+
 	$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
 	$stmt->bind_param("ssi", $first, $last, $userID);
 } else {
 	$name = "%" . $search . "%";
-	$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE FirstName LIKE ? AND LastName LIKE ? AND UserID = ?");
+	$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
 	$stmt->bind_param("ssi", $name, $name, $userID);
 }
 
