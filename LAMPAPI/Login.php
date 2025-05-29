@@ -1,10 +1,15 @@
 <?php
-	// CORS headers
-	// header("Access-Control-Allow-Origin: *");
-	// header("Access-Control-Allow-Headers: Content-Type");
-	// header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-	echo "CORS headers set\n";
-	
+
+	session_start();
+
+	//CORS headers
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
+
+	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
+
 	$inData = getRequestInfo();
 	
 	$id = 0;
@@ -25,6 +30,7 @@
 
 		if( $row = $result->fetch_assoc()  )
 		{
+			$_SESSION["userID"] = $row["ID"];
 			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
 		}
 		else
