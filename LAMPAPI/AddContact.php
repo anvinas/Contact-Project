@@ -4,7 +4,7 @@
 
 	$inData = getRequestInfo();
 	
-	$color = $inData["color"];
+	$color = $inData["Contacts"];
 	$userId = $inData["userId"];
 
 	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
