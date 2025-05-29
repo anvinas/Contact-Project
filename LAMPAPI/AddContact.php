@@ -1,6 +1,11 @@
 <?php
 
 	//This php file lets user add a contact
+
+	// CORS headers
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 	
 	session_start();
 
@@ -30,7 +35,7 @@
 	
 	else
 	{
-		"INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES (?, ?, ?, ?, ?)"
+		$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES (?, ?, ?, ?, ?)")
 		$stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
 		
 		if ($stmt->execute()) 
