@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: black;
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    cursor: url('/public/mouse.png'), auto; 
+    /* cursor: url('/public/mouse.png') 0 0, auto; */
+
+
+}
+.container{
+    /* opacity: 0; */
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 100px;
+    background-color: rgba(255, 255, 255, 0.918);
+    border-radius: 5px;
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"] {
+        width: 250px;
+        padding: 12px 16px;
+        border: 1px solid #530000;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    input:focus {
+        border-color: #4f46e5; /* Indigo-600 */
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Optional: Add placeholder styling */
+    input::placeholder {
+        color: #a0aec0;
+        font-style: italic;
+    }
+
+    .password-wrapper{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .eyeClosed{
+            height: 17px;
+            width: 17px;
+            position: absolute;
+            top: 47%;
+            right: 5px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(1470%) hue-rotate(312deg) brightness(102%) contrast(102%);
+            &:hover{   
+                filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(1470%) hue-rotate(312deg) brightness(22%) contrast(102%);
+            }
+        }
+    }
+    
+}
+
+
+
+
+.container input{
+    margin: 10px 0;
+    
+}
+
+.btn{
+    width: 80px;
+    height: 40px;
+    background-color: #f20e6e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 7px;
+
+    &:hover{
+        background-color: #e54646;
+    }
+
+}
+
+
+.vaporwave-container{
+    position: absolute;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+#vapor-grid{
+    width: 100vw;
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    /* filter: hue-rotate(243deg) saturate(5) brightness(0.7) contrast(1.15); */
+
+}
+
+#sun-wrapper{
+    transform: translate(-50%, -50%);
+    top: -260px;
+    left: 50%;
+    position: absolute;
+    
+    #vapor-sun{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 400px;
+        animation: sunPulse 1.5s ease-in-out infinite;
+        
+    }
+}
+
+#star-wrapper{
+    .stars-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 50vh;
+        overflow: hidden;
+        z-index: -1; /* behind sun */
+        pointer-events: none;
+      }
+    .star {
+        position: absolute;
+        background: #e13e3e;
+        height: 25px;
+        width: 15px;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+}
+
+#vapor-tree{
+    position: absolute;
+    height: 300px;
+    top: -200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#vapor-sun,
+.stars-container {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+#loginResult{
+    margin: 20px 0;
+    color: rgb(219 152 65 / 47%);
+    background-color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border:1px solid;
+    border: none;
+    &:not(:empty) {
+        border:1px solid rgb(219 152 65 / 47%);;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        padding: 5px 10px;
+    }
+}
+
+/* Animations */
+@keyframes sunPulse {
+    0% {
+       height: 400px;
+        opacity: 1;
+    }
+    50% {
+        height: 412px; /* Slight pulse */
+        opacity: 0.98;
+    }
+    100% {
+        height: 400px;
+        opacity: 1;
+    }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+input[type="text"],
+input[type="password"] {
+  font-family: 'Press Start 2P', monospace;
+  background-color: #1a1a1a;
+  color: #f20e6e;
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, #f20e6e, #00fff7);
+  border-image-slice: 1;
+  padding: 10px 14px;
+  font-size: 12px;
+  outline: none;
+  width: 100%;
+  box-shadow: 0 0 5px #f20e6e88, 0 0 15px #00fff766;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input::placeholder {
+  color: #f20e6eaa;
+}
+
+input:focus {
+  box-shadow: 0 0 10px #f20e6e, 0 0 25px #00fff7;
+  border-image: linear-gradient(90deg, #f20e6e, #00fff7, #f20e6e);
+}

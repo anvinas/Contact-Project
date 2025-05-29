@@ -1,6 +1,10 @@
 <?php
-	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
-
+	// CORS headers
+	// header("Access-Control-Allow-Origin: *");
+	// header("Access-Control-Allow-Headers: Content-Type");
+	// header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+	echo "CORS headers set\n";
+	
 	$inData = getRequestInfo();
 	
 	$id = 0;

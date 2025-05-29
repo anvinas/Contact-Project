@@ -1,22 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script src="js/code.js"></script>
 </head>
 <body>
+    <div class="container">
+        <input type="text" id="loginName" placeholder="Username">
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+        <div class="password-wrapper">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <img src="public/svg/eye_opened.svg" class="eyeClosed" alt="Eye Icon" onclick="togglePasswordVisibility(event)">
+        </div>
 
-<div id="loginDiv">
-	<span id="inner-title">PLEASE LOG IN</span>
-	<input type="text" id="loginName" placeholder="Username" /><br />
-	<input type="password" id="loginPassword" placeholder="Password"/><br />
-	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
-	<span id="loginResult"></span>
-</div>
+        <div class="btn" onclick="doLogin();">Login</div>
+        <div id="loginResult"></div>
+        
+        <div class="btn" onclick="doSignUp();">Sign Up</div>
 
+
+    </div>
+
+    <div class="vaporwave-container">
+        <img src="public/grid-4.png" id="vapor-grid" alt="Vaporwave Image">
+        <div id="sun-wrapper">
+            <img src="public/sun.png" id="vapor-sun" alt="Vaporwave Image"> 
+        </div>
+        <div id="star-wrapper">
+            <div class="stars-container"></div>
+        </div>
+        <img src="public/tree-2.png" id="vapor-tree" alt="Vaporwave Image"> 
+    </div>
+
+    <script src="js/loginPage.js"></script>
 </body>
 </html>

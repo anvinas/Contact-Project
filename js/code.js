@@ -46,7 +46,7 @@
 
 					saveCookie();
 		
-					window.location.href = "color.html";
+					window.location.href = "User_Contacts.html";
 				}
 			};
 			xhr.send(jsonPayload);
@@ -108,48 +108,56 @@
 		window.location.href = "index.html";
 	}
 
-	function addColor()
+	function addContact()
 	{
-		let newColor = document.getElementById("colorText").value;
-		document.getElementById("colorAddResult").innerHTML = "";
+	let firstName = document.getElementById("contactFirstName").value;
+	document.getElementById("contactAddResult").innerHTML = "";
+	//Output result of contact added later
+	let lastName = document.getElementById("contactLastName").value;
+	let phoneNumber = document.getElementById("contactPhone").value;
+	let email = document.getElementById("contactEmail").value;
 
-		let tmp = {color:newColor,userId,userId};
-		let jsonPayload = JSON.stringify( tmp );
-
-		let url = urlBase + '/AddColor.' + extension;
-		
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
-		{
-			xhr.onreadystatechange = function() 
-			{
-				if (this.readyState == 4 && this.status == 200) 
-				{
-					document.getElementById("colorAddResult").innerHTML = "Color has been added";
-				}
-			};
-			xhr.send(jsonPayload);
-		}
-		catch(err)
-		{
-			document.getElementById("colorAddResult").innerHTML = err.message;
-		}
-		
+	//Validate first name input
+	if(firstName == null || firstName == "") 
+	{
+		console.log("No first name");
+	}
+	
+	else
+	//Validate last name input
+	if(lastName == null || lastName == "")
+	{
+			console.log("No last name");
+	}
+	
+	else
+	// Validate phone number
+	if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
+	{
+		console.log(phoneNumber);
+		console.log("Invalid Phone Number");
 	}
 
-	function searchColor()
+	else
+	//Validate parts around "@" in email
+	if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
 	{
-		let srch = document.getElementById("searchText").value;
-		document.getElementById("colorSearchResult").innerHTML = "";
-		
-		let colorList = "";
+		console.log("Invalid Email");
+	}
 
-		let tmp = {search:srch,userId:userId};
+	else
+	//Vlaidate parts around the "." in email
+	if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
+	{
+			console.log("Invalid Email. Needs proper address");
+	}
+
+	else
+	{	
+		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
 		let jsonPayload = JSON.stringify( tmp );
-
-		let url = urlBase + '/SearchColors.' + extension;
+		console.log(jsonPayload);
+		let url = urlBase + '/AddContact.' + extension;
 		
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
@@ -160,26 +168,71 @@
 			{
 				if (this.readyState == 4 && this.status == 200) 
 				{
-					document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-					let jsonObject = JSON.parse( xhr.responseText );
-					
-					for( let i=0; i<jsonObject.results.length; i++ )
-					{
-						colorList += jsonObject.results[i];
-						if( i < jsonObject.results.length - 1 )
-						{
-							colorList += "<br />\r\n";
-						}
-					}
-					
-					document.getElementsByTagName("p")[0].innerHTML = colorList;
+					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+					console.log(xhr.responseText);
 				}
 			};
 			xhr.send(jsonPayload);
 		}
 		catch(err)
 		{
-			document.getElementById("colorSearchResult").innerHTML = err.message;
+			document.getElementById("contactAddResult").innerHTML = err.message;
+		}
+	}
+	
+	}	
+
+	function searchContact()
+	{
+		let srch = document.getElementById("searchText").value;
+		document.getElementById("contactSearchResult").innerHTML = "";
+		
+		let contactList = "";
+
+		let tmp = {search:srch};
+		let jsonPayload = JSON.stringify( tmp );
+
+		let url = urlBase + '/SearchContact.' + extension;
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		try
+		{
+			xhr.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
+					let jsonObject = JSON.parse( xhr.responseText );
+					
+					console.log("Response from PHP:", jsonObject); //Php debugging
+
+					for( let i=0; i<jsonObject.results.length; i++ )
+					{
+						let c = jsonObject.results[i];
+
+						contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
+						if( i < jsonObject.results.length - 1 )
+						{
+							contactList += "<br />\r\n";
+						}
+						
+						//contactList += jsonObject.results[i];
+						//if( i < jsonObject.results.length - 1 )
+						//{
+						//	contactList += "<br />\r\n";
+						//}
+					}
+					
+					document.getElementsByTagName("p")[0].innerHTML = contactList;
+				}
+			};
+			xhr.send(jsonPayload);
+		}
+		catch(err)
+		{
+			document.getElementById("contactSearchResult").innerHTML = err.message;
 		}
 		
 	}
