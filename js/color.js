@@ -1,4 +1,6 @@
 
+
+/*
 const inputEl = document.querySelector('#searchText');
 console.log(inputEl);
 inputEl.addEventListener('input', function(event) {
@@ -6,6 +8,8 @@ inputEl.addEventListener('input', function(event) {
     const data = searchColor(event.target.value);
     
 });
+*/
+
 
 // Handle Open My Create Contact Modal
 const handleOpenCreateContactModal = ()=>{

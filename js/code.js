@@ -108,15 +108,56 @@
 		window.location.href = "index.html";
 	}
 
-	function addColor()
-	{
-		let newColor = document.getElementById("colorText").value;
-		document.getElementById("colorAddResult").innerHTML = "";
+	function addContact()
+{
+	let firstName = document.getElementById("contactFirstName").value;
+	document.getElementById("contactAddResult").innerHTML = "";
+	//Output result of contact added later
+	let lastName = document.getElementById("contactLastName").value;
+	let phoneNumber = document.getElementById("contactPhone").value;
+	let email = document.getElementById("contactEmail").value;
 
-		let tmp = {color:newColor,userId,userId};
+	//Validate first name input
+	if(firstName == null || firstName == "") 
+	{
+		console.log("No first name");
+	}
+	
+	else
+	//Validate last name input
+	if(lastName == null || lastName == "")
+	{
+			console.log("No last name");
+	}
+	
+	else
+	// Validate phone number
+	if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
+	{
+		console.log(phoneNumber);
+		console.log("Invalid Phone Number");
+	}
+
+	else
+	//Validate parts around "@" in email
+	if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
+	{
+		console.log("Invalid Email");
+	}
+
+	else
+	//Vlaidate parts around the "." in email
+	if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
+	{
+			console.log("Invalid Email. Needs proper address");
+	}
+
+	else
+	{	
+		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email, userId:userId};
 		let jsonPayload = JSON.stringify( tmp );
 
-		let url = urlBase + '/AddColor.' + extension;
+		let url = urlBase + '/AddContact.' + extension;
 		
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
@@ -127,17 +168,18 @@
 			{
 				if (this.readyState == 4 && this.status == 200) 
 				{
-					document.getElementById("colorAddResult").innerHTML = "Color has been added";
+					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
 				}
 			};
 			xhr.send(jsonPayload);
 		}
 		catch(err)
 		{
-			document.getElementById("colorAddResult").innerHTML = err.message;
+			document.getElementById("contactAddResult").innerHTML = err.message;
 		}
-		
 	}
+	
+}	
 
 	function searchContact()
 	{
