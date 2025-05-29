@@ -31,10 +31,17 @@
                 "INSERT INTO Users (FirstName, LastName, Login, Password, DateCreated) VALUES (?, ?, ?, ?, NOW())"
             );
             $stmt->bind_param("ssss", $firstName, $lastName, $user_input_login, $user_input_password);
-            $stmt->execute();
-            $stmt->close();
+            
+            if (stmt->execute())
+            {
+                returnWithSuccess($firstName, $lastName);
+            }
+            else 
+            {
+                returnWithError("Insert failed: " . $stmt->error);
+            }
 
-            returnWithError(""); 
+            $stmt->close();
         }
 
         $check_exist->close();
@@ -48,6 +55,12 @@
 
     function returnWithError($err) {
         $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        sendResultInfoAsJson($retValue);
+    }
+
+    functon returnWithInfo($id, $firstName, $lastName)
+    {
+        $retValue = '{"id":' .$id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
         sendResultInfoAsJson($retValue);
     }
 
