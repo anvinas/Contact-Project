@@ -96,6 +96,7 @@
 		else
 		{
 			document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+			displayFirstFourContacts();
 		}
 	}
 
@@ -236,3 +237,90 @@
 		}
 		
 	}
+/*
+function displayFirstFourContacts()
+{
+	let tmp = { search: "", userId: userId }; // Ensure userId is valid here
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + '/SearchContact.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	xhr.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status == 200)
+		{
+			let jsonObject = JSON.parse(xhr.responseText);
+			console.log("API Response:", jsonObject);
+			let contacts = jsonObject.results.slice(0, 4);
+			
+			let contactFlex = document.querySelector('.contactFlex');
+			if (!contactFlex) {
+				console.error("contactFlex element not found in HTML.");
+				return;
+			}
+
+			contactFlex.innerHTML = '';
+
+			contacts.forEach(c => {
+				let div = document.createElement('div');
+				div.className = 'contactCard';
+				div.innerHTML = `
+					<div class="contactInfo">
+						<strong>${c.FirstName} ${c.LastName}</strong><br>
+						Phone: ${c.Phone}<br>
+						Email: ${c.Email}
+					</div>
+					<div class="contactActions">
+						<button onclick="modifyContact()">Modify</button>
+						<button onclick="deleteContact()">Delete</button>
+					</div>
+				`;
+				contactFlex.appendChild(div);
+			});
+		}
+	};
+
+	try {
+		xhr.send(jsonPayload);
+	} catch (err) {
+		console.error("Request failed:", err.message);
+	}
+} */
+function displayFirstFourContacts()
+{
+	// Simulated/fake data (what you'd expect from your server)
+	let mockContacts = [
+		{ ID: 1, FirstName: "Jane", LastName: "Doe", Phone: "1234567890", Email: "jane@example.com" },
+		{ ID: 2, FirstName: "John", LastName: "Smith", Phone: "9876543210", Email: "john@example.com" },
+		{ ID: 3, FirstName: "Alice", LastName: "Brown", Phone: "4567891234", Email: "alice@example.com" },
+		{ ID: 4, FirstName: "Bob", LastName: "White", Phone: "3216549870", Email: "bob@example.com" }
+	];
+
+	let contactFlex = document.querySelector('.contactFlex');
+	if (!contactFlex) {
+		console.error("contactFlex element not found.");
+		return;
+	}
+
+	contactFlex.innerHTML = '';
+
+	mockContacts.forEach(c => {
+		let div = document.createElement('div');
+		div.className = 'contactCard';
+		div.innerHTML = `
+			<div class="contactInfo">
+				<strong>${c.FirstName} ${c.LastName}</strong><br>
+				Phone: ${c.Phone}<br>
+				Email: ${c.Email}
+			</div>
+			<div class="contactActions">
+				<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
+				<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
+			</div>
+		`;
+		contactFlex.appendChild(div);
+	});
+}
