@@ -11,7 +11,7 @@
 	}
 	function goToLogin()
 	{
-		window.location.href = "signup.html";
+		window.location.href = "index.html";
 	}
 	function doLogin()
 	{
