@@ -11,8 +11,25 @@ body{
     overflow-x: hidden;
     cursor: url('/public/mouse.png'), auto; 
     /* cursor: url('/public/mouse.png') 0 0, auto; */
+    flex-direction: column;
 
+}
 
+.headerText{
+    font-size: 2.5rem;
+    margin: 5px 0;
+}
+.headerDesc{
+    margin: 5px 0;
+    font-weight: 300;
+}
+.signupBtn,.loginBtn{
+    color: #f20e6e;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover{
+        color: #e54646;
+    }
 }
 .container{
     /* opacity: 0; */

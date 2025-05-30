@@ -293,3 +293,13 @@ nav a:hover {
 .btn:hover {
   background-color: #e54646;
 }
+
+.invalidValue{
+  color: red;
+  font-size: 0.78rem;
+  transition: all 0.3s ease-in;
+}
+
+.hideText{
+  opacity: 0;
+}

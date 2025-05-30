@@ -5,6 +5,14 @@
 	let firstName = "";
 	let lastName = "";
 
+	function goToSignUp()
+	{
+		window.location.href = "signup.html";
+	}
+	function goToLogin()
+	{
+		window.location.href = "signup.html";
+	}
 	function doLogin()
 	{
 		userId = 0;
@@ -109,77 +117,89 @@
 		window.location.href = "index.html";
 	}
 
+	function clearAllAddContactValidators(){
+		const validatorEls = document.getElementsByClassName("invalidValue")
+		for (let i = 0; i < validatorEls.length; i++) {
+			validatorEls[i].classList.add("hideText");
+		}
+	
+	}
+
 	function addContact()
 	{
-	let firstName = document.getElementById("contactFirstName").value;
-	document.getElementById("contactAddResult").innerHTML = "";
-	//Output result of contact added later
-	let lastName = document.getElementById("contactLastName").value;
-	let phoneNumber = document.getElementById("contactPhone").value;
-	let email = document.getElementById("contactEmail").value;
+		clearAllAddContactValidators();
 
-	//Validate first name input
-	if(firstName == null || firstName == "") 
-	{
-		console.log("No first name");
-	}
-	
-	else
-	//Validate last name input
-	if(lastName == null || lastName == "")
-	{
-			console.log("No last name");
-	}
-	
-	else
-	// Validate phone number
-	if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
-	{
-		console.log(phoneNumber);
-		console.log("Invalid Phone Number");
-	}
+		let firstName = document.getElementById("contactFirstName").value;
+		document.getElementById("contactAddResult").innerHTML = "";
+		//Output result of contact added later
+		let lastName = document.getElementById("contactLastName").value;
+		let phoneNumber = document.getElementById("contactPhone").value;
+		let email = document.getElementById("contactEmail").value;
+		let isAllInputValid = true;
 
-	else
-	//Validate parts around "@" in email
-	if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
-	{
-		console.log("Invalid Email");
-	}
-
-	else
-	//Vlaidate parts around the "." in email
-	if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
-	{
-			console.log("Invalid Email. Needs proper address");
-	}
-
-	else
-	{	
-		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
-		let jsonPayload = JSON.stringify( tmp );
-		console.log(jsonPayload);
-		let url = urlBase + '/AddContact.' + extension;
+		//Validate first name input
+		if(firstName == null || firstName == "") 
+		{
+			isAllInputValid = false;
+			document.getElementById("firstNameValidatorText").classList.remove("hideText");
+		}
 		
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
+		//Validate last name input
+		if(lastName == null || lastName == "")
 		{
-			xhr.onreadystatechange = function() 
+			isAllInputValid = false;
+			document.getElementById("lastNameValidatorText").classList.remove("hideText");
+		}
+		
+		// Validate phone number
+		if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
+		{
+			isAllInputValid = false;
+			document.getElementById("phoneNumberValidatorText").classList.remove("hideText");
+		}
+
+		//Validate parts around "@" in email
+		if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
+		{
+			isAllInputValid = false;
+			document.getElementById("emailValidatorText").classList.remove("hideText");
+		}else
+
+		//Vlaidate parts around the "." in email
+		if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
+		{
+			isAllInputValid = false;
+			console.log("Invalid Email. Needs proper address");
+			document.getElementById("emailValidatorText").classList.remove("hideText");
+		}
+
+		if(isAllInputValid)
+		{	
+			let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
+			let jsonPayload = JSON.stringify( tmp );
+			console.log(jsonPayload);
+			let url = urlBase + '/AddContact.' + extension;
+			
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+			try
 			{
-				if (this.readyState == 4 && this.status == 200) 
+				xhr.onreadystatechange = function() 
 				{
-					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-					console.log(xhr.responseText);
-				}
-			};
-			xhr.send(jsonPayload);
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+						console.log(xhr.responseText);
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				document.getElementById("contactAddResult").innerHTML = err.message;
+			}
 		}
-		catch(err)
-		{
-			document.getElementById("contactAddResult").innerHTML = err.message;
-		}
-	}
 	
 	}	
 

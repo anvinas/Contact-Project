@@ -10,8 +10,9 @@
 </head>
 <body>
     <div class="container">
+        <div class="headerText">Login</div>
+        <div class="headerDesc">Login to continue</div>
         <input type="text" id="loginName" placeholder="Username">
-
         <div class="password-wrapper">
             <input type="password" id="loginPassword" placeholder="Password">
             <img src="public/svg/eye_opened.svg" class="eyeClosed" alt="Eye Icon" onclick="togglePasswordVisibility(event)">
@@ -19,11 +20,9 @@
 
         <div class="btn" onclick="doLogin();">Login</div>
         <div id="loginResult"></div>
-        
-        <div class="btn" onclick="doSignUp();">Sign Up</div>
-
-
+        <div>Dont have an account? <span class="signupBtn" onclick="goToSignup();">Sign Up</span></div>
     </div>
+
 
     <div class="vaporwave-container">
         <img src="public/grid-4.png" id="vapor-grid" alt="Vaporwave Image">
