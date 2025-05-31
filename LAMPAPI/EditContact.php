@@ -17,7 +17,7 @@
             exit();
         }
 
-        $userID = $_SESSION("userID");
+        $userID = $_SESSION["userID"];
         $inData = getRequestInfo();
         $firstName = $inData["firstName"];
         $lastName = $inData["lastName"];
