@@ -4,6 +4,7 @@
 	let userId = 0;
 	let firstName = "";
 	let lastName = "";
+	let currentEditContactID = "";
 
 	function goToSignup()
 	{
@@ -13,70 +14,6 @@
 	{
 		window.location.href = "index.html";
 	}
-
-	function doSignUp()
-	{		
-		let userName = document.getElementById("loginName").value;
-		let firstName = document.getElementById("firstName").value;
-		let lastName = document.getElementById("lastName").value;
-		let signUpPassword = document.getElementById("signupPassword").value;
-		let confSignUpPassword = document.getElementById("signupPasswordConf").value;
-
-		document.getElementById("signupResult").innerHTML = "";
-
-		if((signUpPassword === confSignUpPassword) == false)
-		{
-			console.log("Passwords Do Not Match");
-			document.getElementById("signupResult").innerHTML = "Passwords Do Not Match";
-
-		}
-		else
-		{
-
-		let tmp = {firstName: firstName, lastName:lastName, user_input_login:userName, user_input_password:confSignUpPassword};
-		let jsonPayload = JSON.stringify( tmp );
-		
-		let url = urlBase + '/Register.' + extension;
-
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
-		{
-			xhr.onreadystatechange = function() 
-			{
-				if (this.readyState == 4 && this.status == 200) 
-				{
-					let jsonObject = JSON.parse( xhr.responseText );
-					console.log("Response from PHP:", jsonObject); //Php debugging	
-										console.log(xhr.responseText);
-
-					
-					if(jsonObject.error && jsonObject.error != "" )
-					{		
-						document.getElementById("signupResult").innerHTML = jsonObject.error;
-						return;
-					}
-
-					document.getElementById("signupResult").innerHTML = "User Successfully Added";
-
-					saveCookie();
-		
-					window.location.href = "index.html";
-				}
-			};
-			xhr.send(jsonPayload);
-		}
-		catch(err)
-		{
-			document.getElementById("signupResult").innerHTML = err.message;
-		}
-			
-		}
-
-		
-	}
-
 	function doLogin()
 	{
 		userId = 0;
@@ -288,7 +225,7 @@
 			{
 				if (this.readyState == 4 && this.status == 200) 
 				{
-					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
+					//document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
 					let jsonObject = JSON.parse( xhr.responseText );
 					
 					console.log("Response from PHP:", jsonObject); //Php debugging
@@ -416,11 +353,45 @@ function displayFirstFourContacts()
 
 function doModify(id)
 {
-	let tmp = {};
 
-	//let tmp = {UserID: userId }; // Ensure userId is valid here
+	let tmp = {contactID: id}; // Ensure contactId is valid here
+	currentEditContactID = id;
+
 	let jsonPayload = JSON.stringify(tmp);
-	let url = urlBase + '/EditContacts.' + extension;
+	let url = urlBase + '/SearchContactByID.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+			xhr.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					let jsonObject = JSON.parse( xhr.responseText );
+					
+					console.log("Response from PHP:", jsonObject); //Php debugging
+
+					document.getElementById("modifyContactFirstName").innerHTML = jsonObject.FirstName;
+					document.getElementById("ModifyContactLastName").innerHTML = jsonObject.LastName;
+					document.getElementById("ModifyContactPhone").innerHTML = jsonObject.Phone;
+					document.getElementById("ModifyContactEmail").innerHTML = jsonObject.Email;
+				}
+			};
+			xhr.send(jsonPayload);
+		}
+		catch(err)
+		{
+			//document.getElementById("contactSearchResult").innerHTML = err.message;
+		}
+
+
+	handleOpenModifyContactModal();
+
+
+
 }
 
 function doDelete()
