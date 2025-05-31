@@ -257,12 +257,12 @@
 		}
 		
 	}
-/*
+
 function displayFirstFourContacts()
 {
-	let tmp = { search: "", userId: userId }; // Ensure userId is valid here
+	let tmp = {UserID: userId }; // Ensure userId is valid here
 	let jsonPayload = JSON.stringify(tmp);
-	let url = urlBase + '/SearchContact.' + extension;
+	let url = urlBase + '/GetContacts.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -285,6 +285,7 @@ function displayFirstFourContacts()
 			contactFlex.innerHTML = '';
 
 			contacts.forEach(c => {
+				console.log(c)
 				let div = document.createElement('div');
 				div.className = 'contactCard';
 				div.innerHTML = `
@@ -294,8 +295,8 @@ function displayFirstFourContacts()
 						Email: ${c.Email}
 					</div>
 					<div class="contactActions">
-						<button onclick="modifyContact()">Modify</button>
-						<button onclick="deleteContact()">Delete</button>
+						<button onclick="modifyContact(${c.ID})">Modify</button>
+						<button onclick="deleteContact(${c.ID})">Delete</button>
 					</div>
 				`;
 				contactFlex.appendChild(div);
@@ -308,7 +309,9 @@ function displayFirstFourContacts()
 	} catch (err) {
 		console.error("Request failed:", err.message);
 	}
-} */
+} 
+
+/*
 function displayFirstFourContacts()
 {
 	// Simulated/fake data (what you'd expect from your server)
@@ -343,4 +346,22 @@ function displayFirstFourContacts()
 		`;
 		contactFlex.appendChild(div);
 	});
+}
+*/
+
+
+function doModify(id)
+{
+	let tmp = {};
+
+	//let tmp = {UserID: userId }; // Ensure userId is valid here
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + '/EditContacts.' + extension;
+}
+
+function doDelete()
+{
+	let tmp = {UserID: userId }; // Ensure userId is valid here
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + '/DeleteContact.' + extension;
 }
