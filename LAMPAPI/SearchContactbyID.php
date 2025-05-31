@@ -8,7 +8,8 @@
 	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 	//User logged-in check
-	if (!isset($_SESSION["userID"])) {
+	if (!isset($_SESSION["userID"])) 
+    {
 		returnWithError("User not logged in");
 		exit();
 	}
@@ -31,6 +32,7 @@
         $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE ID = ? AND UserID = ?");
         $stmt->bind_param("ii", $userID, $contactID);
         $stmt->execute();
+
         //Storing results
         $result = $stmt->get_result();
 
