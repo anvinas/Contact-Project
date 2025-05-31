@@ -44,3 +44,21 @@ const handleCloseDeleteContactModal = ()=>{
         modalEl.classList.add("closedModal")
     }
 }
+
+
+//Handle Open My Modify Contact Modal
+const handleOpenModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Modify Contact Modal
+const handleCloseModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
