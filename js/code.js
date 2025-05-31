@@ -4,6 +4,7 @@
 	let userId = 0;
 	let firstName = "";
 	let lastName = "";
+	let currentEditContactID = "";
 
 	function goToSignup()
 	{
@@ -13,70 +14,6 @@
 	{
 		window.location.href = "index.html";
 	}
-
-	function doSignUp()
-	{		
-		let userName = document.getElementById("loginName").value;
-		let firstName = document.getElementById("firstName").value;
-		let lastName = document.getElementById("lastName").value;
-		let signUpPassword = document.getElementById("signupPassword").value;
-		let confSignUpPassword = document.getElementById("signupPasswordConf").value;
-
-		document.getElementById("signupResult").innerHTML = "";
-
-		if((signUpPassword === confSignUpPassword) == false)
-		{
-			console.log("Passwords Do Not Match");
-			document.getElementById("signupResult").innerHTML = "Passwords Do Not Match";
-
-		}
-		else
-		{
-
-		let tmp = {firstName: firstName, lastName:lastName, user_input_login:userName, user_input_password:confSignUpPassword};
-		let jsonPayload = JSON.stringify( tmp );
-		
-		let url = urlBase + '/Register.' + extension;
-
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
-		{
-			xhr.onreadystatechange = function() 
-			{
-				if (this.readyState == 4 && this.status == 200) 
-				{
-					let jsonObject = JSON.parse( xhr.responseText );
-					console.log("Response from PHP:", jsonObject); //Php debugging	
-										console.log(xhr.responseText);
-
-					
-					if(jsonObject.error && jsonObject.error != "" )
-					{		
-						document.getElementById("signupResult").innerHTML = jsonObject.error;
-						return;
-					}
-
-					document.getElementById("signupResult").innerHTML = "User Successfully Added";
-
-					saveCookie();
-		
-					window.location.href = "index.html";
-				}
-			};
-			xhr.send(jsonPayload);
-		}
-		catch(err)
-		{
-			document.getElementById("signupResult").innerHTML = err.message;
-		}
-			
-		}
-
-		
-	}
-
 	function doLogin()
 	{
 		userId = 0;
@@ -267,165 +204,173 @@
 	
 	}	
 
-	function searchContact()
+	function searchContact() 
 	{
-		let srch = document.getElementById("searchText").value;
+		let srch = document.getElementById("searchText").value.trim();
+
+		if (srch === "") {
+		displayFirstFourContacts();
+		return;
+		}
+
+		let contactFlex = document.querySelector('.contactFlex');
+
+		if (!contactFlex) {
+			console.error("contactFlex element not found.");
+			return;
+		}
+
+		contactFlex.innerHTML = "";
 		document.getElementById("contactSearchResult").innerHTML = "";
-		
-		let contactList = "";
 
 		let tmp = {search:srch};
 		let jsonPayload = JSON.stringify( tmp );
 
 		let url = urlBase + '/SearchContact.' + extension;
-		
+
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		try
 		{
-			xhr.onreadystatechange = function() 
+			xhr.onreadystatechange = function()
 			{
-				if (this.readyState == 4 && this.status == 200) 
+				if (this.readyState == 4 && this.status == 200)
 				{
-					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
 					let jsonObject = JSON.parse( xhr.responseText );
-					
+
 					console.log("Response from PHP:", jsonObject); //Php debugging
 
-					for( let i=0; i<jsonObject.results.length; i++ )
-					{
-						let c = jsonObject.results[i];
-
-						contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
-						if( i < jsonObject.results.length - 1 )
-						{
-							contactList += "<br />\r\n";
-						}
-						
-						//contactList += jsonObject.results[i];
-						//if( i < jsonObject.results.length - 1 )
-						//{
-						//	contactList += "<br />\r\n";
-						//}
+					if (!jsonObject.results || jsonObject.results.length === 0) {
+						return;
 					}
-					
-					document.getElementsByTagName("p")[0].innerHTML = contactList;
-				}
-			};
+
+					jsonObject.results.forEach(c => {
+						let div = document.createElement('div');
+						div.className = 'contactCard';
+						div.innerHTML = `
+							<div class="contactInfo">
+								<strong>${c.FirstName} ${c.LastName}</strong><br>
+								Phone: ${c.Phone}<br>
+								Email: ${c.Email}
+							</div>
+							<div class="contactActions">
+								<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
+								<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
+							</div>
+						`;
+						contactFlex.appendChild(div);
+					});
+				};
+			}
 			xhr.send(jsonPayload);
+
 		}
-		catch(err)
+		catch(err) 
 		{
 			document.getElementById("contactSearchResult").innerHTML = err.message;
 		}
-		
 	}
 
-function displayFirstFourContacts()
-{
-	let tmp = {UserID: userId }; // Ensure userId is valid here
-	let jsonPayload = JSON.stringify(tmp);
-	let url = urlBase + '/GetContacts.' + extension;
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-	xhr.onreadystatechange = function()
+	function displayFirstFourContacts()
 	{
-		if (this.readyState == 4 && this.status == 200)
+		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/GetContacts.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		xhr.onreadystatechange = function()
 		{
-			let jsonObject = JSON.parse(xhr.responseText);
-			console.log("API Response:", jsonObject);
-			let contacts = jsonObject.results.slice(0, 4);
-			
-			let contactFlex = document.querySelector('.contactFlex');
-			if (!contactFlex) {
-				console.error("contactFlex element not found in HTML.");
-				return;
+			if (this.readyState == 4 && this.status == 200)
+			{
+				let jsonObject = JSON.parse(xhr.responseText);
+				console.log("API Response:", jsonObject);
+				let contacts = jsonObject.results.slice(0, 4);
+				
+				let contactFlex = document.querySelector('.contactFlex');
+				if (!contactFlex) {
+					console.error("contactFlex element not found in HTML.");
+					return;
+				}
+
+				contactFlex.innerHTML = '';
+
+				contacts.forEach(c => {
+					console.log(c)
+					let div = document.createElement('div');
+					div.className = 'contactCard';
+					div.innerHTML = `
+						<div class="contactInfo">
+							<strong>${c.FirstName} ${c.LastName}</strong><br>
+							Phone: ${c.Phone}<br>
+							Email: ${c.Email}
+						</div>
+						<div class="contactActions">
+							<button onclick="modifyContact(${c.ID})">Modify</button>
+							<button onclick="deleteContact(${c.ID})">Delete</button>
+						</div>
+					`;
+					contactFlex.appendChild(div);
+				});
+			}
+		};
+
+		try {
+			xhr.send(jsonPayload);
+		} catch (err) {
+			console.error("Request failed:", err.message);
+		}
+	}
+
+	function doModify(id)
+	{
+
+		let tmp = {contactID: id}; // Ensure contactId is valid here
+		currentEditContactID = id;
+
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/SearchContactByID.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						document.getElementById("modifyContactFirstName").innerHTML = jsonObject.FirstName;
+						document.getElementById("ModifyContactLastName").innerHTML = jsonObject.LastName;
+						document.getElementById("ModifyContactPhone").innerHTML = jsonObject.Phone;
+						document.getElementById("ModifyContactEmail").innerHTML = jsonObject.Email;
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
 			}
 
-			contactFlex.innerHTML = '';
 
-			contacts.forEach(c => {
-				console.log(c)
-				let div = document.createElement('div');
-				div.className = 'contactCard';
-				div.innerHTML = `
-					<div class="contactInfo">
-						<strong>${c.FirstName} ${c.LastName}</strong><br>
-						Phone: ${c.Phone}<br>
-						Email: ${c.Email}
-					</div>
-					<div class="contactActions">
-						<button onclick="modifyContact(${c.ID})">Modify</button>
-						<button onclick="deleteContact(${c.ID})">Delete</button>
-					</div>
-				`;
-				contactFlex.appendChild(div);
-			});
-		}
-	};
+		handleOpenModifyContactModal();
 
-	try {
-		xhr.send(jsonPayload);
-	} catch (err) {
-		console.error("Request failed:", err.message);
-	}
-} 
 
-/*
-function displayFirstFourContacts()
-{
-	// Simulated/fake data (what you'd expect from your server)
-	let mockContacts = [
-		{ ID: 1, FirstName: "Jane", LastName: "Doe", Phone: "1234567890", Email: "jane@example.com" },
-		{ ID: 2, FirstName: "John", LastName: "Smith", Phone: "9876543210", Email: "john@example.com" },
-		{ ID: 3, FirstName: "Alice", LastName: "Brown", Phone: "4567891234", Email: "alice@example.com" },
-		{ ID: 4, FirstName: "Bob", LastName: "White", Phone: "3216549870", Email: "bob@example.com" }
-	];
 
-	let contactFlex = document.querySelector('.contactFlex');
-	if (!contactFlex) {
-		console.error("contactFlex element not found.");
-		return;
 	}
 
-	contactFlex.innerHTML = '';
-
-	mockContacts.forEach(c => {
-		let div = document.createElement('div');
-		div.className = 'contactCard';
-		div.innerHTML = `
-			<div class="contactInfo">
-				<strong>${c.FirstName} ${c.LastName}</strong><br>
-				Phone: ${c.Phone}<br>
-				Email: ${c.Email}
-			</div>
-			<div class="contactActions">
-				<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
-				<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
-			</div>
-		`;
-		contactFlex.appendChild(div);
-	});
-}
-*/
-
-
-function doModify(id)
-{
-	let tmp = {};
-
-	//let tmp = {UserID: userId }; // Ensure userId is valid here
-	let jsonPayload = JSON.stringify(tmp);
-	let url = urlBase + '/EditContacts.' + extension;
-}
-
-function doDelete()
-{
-	let tmp = {UserID: userId }; // Ensure userId is valid here
-	let jsonPayload = JSON.stringify(tmp);
-	let url = urlBase + '/DeleteContact.' + extension;
-}
+	function doDelete()
+	{
+		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/DeleteContact.' + extension;
+	}
