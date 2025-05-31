@@ -1,24 +1,25 @@
 <?php
 
-    session_start();
-    //This php file lets a user remove a contact
-
+    session_start(); //Session for server-side ID caching
+    
     // CORS headers
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: Content-Type");
 	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-    
-    $conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); //Database login
-
+    //Correct user logged-in check
     if (!isset($_SESSION["userID"])) 
     {
         returnWithError("User not logged in"); 
         exit();
     }
+    
+    $inData = getRequestInfo(); //Receives JSON payload
 
-    $userID = $_SESSION("userID");
-    $inData = getRequestInfo();
+    //Logs into server
+    $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
+
+    $userID = $_SESSION["userID"];
     $firstName = $inData["firstName"];
     $lastName = $inData["lastName"];
     $phone = $inData["phone"];
@@ -31,8 +32,10 @@
     }
     else
     {
-        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?"); 
-        $stmt = $stmt->bind_param("ii", $contactId, $userID);
+        //Prepares SQL command
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?");
+        $stmt->bind_param("ii", $contactId, $userID);
+        $stmt->execute();
 
         if ($stmt->affected_rows > 0){
             returnWithInfo("Contact with $contactId deleted successfully");
@@ -46,6 +49,7 @@
         $conn->close(); 
     }
 
+    //Helper functions
     function getRequestInfo()
 	{
 		return json_decode(file_get_contents('php://input'), true);
