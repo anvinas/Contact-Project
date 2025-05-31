@@ -310,7 +310,7 @@
 						</div>
 						<div class="contactActions">
 							<button onclick="modifyContact(${c.ID})">Modify</button>
-							<button onclick="deleteContact(${c.ID})">Delete</button>
+							<button onclick="handleOpenDeleteContactModal()">Delete</button>
 						</div>
 					`;
 					contactFlex.appendChild(div);
@@ -325,7 +325,7 @@
 		}
 	}
 
-	function doModify(id)
+	function modifyContact(id)
 	{
 
 		let tmp = {contactID: id}; // Ensure contactId is valid here
@@ -348,10 +348,10 @@
 						
 						console.log("Response from PHP:", jsonObject); //Php debugging
 
-						document.getElementById("modifyContactFirstName").innerHTML = jsonObject.FirstName;
-						document.getElementById("ModifyContactLastName").innerHTML = jsonObject.LastName;
-						document.getElementById("ModifyContactPhone").innerHTML = jsonObject.Phone;
-						document.getElementById("ModifyContactEmail").innerHTML = jsonObject.Email;
+						document.getElementById("modifyContactFirstName").value = jsonObject.FirstName;
+						document.getElementById("modifyContactLastName").value = jsonObject.LastName;
+						document.getElementById("modifyContactPhone").value = jsonObject.Phone;
+						document.getElementById("modifyContactEmail").value = jsonObject.Email;
 					}
 				};
 				xhr.send(jsonPayload);
