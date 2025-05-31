@@ -1,0 +1,80 @@
+/* about.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Exo', sans-serif;
+  background-color: #0f0c29;
+  color: #ffffff;
+}
+
+.retro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Press Start 2P', monospace;
+    background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+    color: #f20e6e;
+    text-shadow: 0 0 5px #f20e6e, 0 0 10px #f20e6e;
+}
+
+.logo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+nav a {
+    margin-left: 20px;
+    color: #00fff7;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #f20e6e;
+    text-shadow: 0 0 8px #f20e6e;
+}
+
+.about-container {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-container h1 {
+    text-align: center;
+    color: #f20e6e;
+    margin-bottom: 40px;
+    text-shadow: 0 0 5px #f20e6e;
+}
+
+.team-member {
+    background-color: #1a1a1a;
+    border: 2px solid #f20e6e;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #f20e6e88;
+}
+
+.team-member h2 {
+    color: #00fff7;
+    margin-bottom: 10px;
+    text-shadow: 0 0 4px #00fff7;
+}
+
+.team-member p {
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 0.7rem;
+}
+
+.retro-footer {
+    background-color: #0f0c29;
+    text-align: center;
+    padding: 15px;
+    color: #888;
+    font-size: 0.6rem;
+    border-top: 1px solid #f20e6e33;
+}
