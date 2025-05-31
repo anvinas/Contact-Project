@@ -166,6 +166,23 @@ nav a:hover {
   background-color: #e54646;
 }
 
+.deleteModalBody{
+  padding: 20px;
+}
+
+.createModalContainer,.deleteModalContainer{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #0c0c0cdb;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden;
+}
+
 .modalInputContainer{
     padding: 0px 20px;
     display: flex;
@@ -194,7 +211,7 @@ nav a:hover {
     }
 }
 
-.createModalMain {
+.createModalMain,.deleteModalMain {
   width: 400px;
   background-color: #1a1a2e;
   border-radius: 8px;
@@ -202,7 +219,7 @@ nav a:hover {
   overflow: hidden;
 }
 
-.createModalHeader {
+.createModalHeader,.deleteModalHeader {
   padding: 16px;
   font-size: 20px;
   text-align: center;
@@ -240,13 +257,14 @@ nav a:hover {
   color: #ffffff60;
 }
 
-.createModalFooter {
+.createModalFooter,.deleteModalFooter {
   padding: 16px;
   display: flex;
   justify-content: space-between;
 }
 
-.createModalFooter button {
+
+.createModalFooter button,.deleteModalFooter button {
   width: 80px;
   height: 40px;
   background-color: #f20e6e;
@@ -261,6 +279,20 @@ nav a:hover {
   font-weight: bold;
 }
 
+.deleteModalFooter button.delete{
+  background-color: #ff0000;
+  &:hover{
+    background-color: #d50101;
+    cursor: pointer;
+  }
+}
+.deleteModalFooter button.close{
+  background-color: #a4a4a4;
+  &:hover{
+    cursor: pointer;
+    background-color: #818181;
+  }
+}
 .createModalFooter .create:hover {
   background-color: #6bd471;
 }
@@ -272,6 +304,8 @@ nav a:hover {
 .closedModal {
   display: none;
 }
+
+
 
 /* Reusable .btn class */
 .btn {

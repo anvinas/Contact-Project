@@ -5,7 +5,7 @@
 	let firstName = "";
 	let lastName = "";
 
-	function goToSignUp()
+	function goToSignup()
 	{
 		window.location.href = "signup.html";
 	}
