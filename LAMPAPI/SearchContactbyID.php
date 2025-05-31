@@ -29,8 +29,8 @@
     else 
     {
         //Preparing SQL command
-        $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE ID = ? AND UserID = ?");
-        $stmt->bind_param("ii", $userID, $contactID);
+        $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE ID = ?");
+        $stmt->bind_param("i",$contactID);
         $stmt->execute();
 
         //Storing results
