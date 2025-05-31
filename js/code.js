@@ -221,7 +221,6 @@
 		}
 
 		contactFlex.innerHTML = "";
-		document.getElementById("contactSearchResult").innerHTML = "";
 
 		let tmp = {search:srch};
 		let jsonPayload = JSON.stringify( tmp );
