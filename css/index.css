@@ -170,7 +170,7 @@ nav a:hover {
   padding: 20px;
 }
 
-.createModalContainer,.deleteModalContainer{
+.createModalContainer,.deleteModalContainer,.modifyModalContainer{
   position: fixed;
   top: 0;
   left: 0;
@@ -265,7 +265,7 @@ nav a:hover {
 
 
 .createModalFooter button,.deleteModalFooter button {
-  width: 80px;
+  width: 90px;
   height: 40px;
   background-color: #f20e6e;
   cursor: pointer;

@@ -87,6 +87,41 @@
 
             </div>
         </div>
+
+        <div id="modifyModalContainer" class="modifyModalContainer ">
+            <div class="createModalMain">
+                <div class="createModalHeader">Modify Contact</div>
+                <div class="createModalBody">
+                    <div class="modalInputContainer">
+                        <div class="desc">First Name</div>
+                        <input type="text" id="modifyContactFirstName" placeholder="First Name">
+                        <div class="invalidValue hideText" id="firstNameValidatorText">Please add a first name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Last Name</div>
+                        <input type="text" id="modifyContactLastName" placeholder="Last Name">
+                        <div class="invalidValue hideText" id="lastNameValidatorText">Please add a last name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Phone Number</div>
+                        <input type="text" id="modifyContactPhone" placeholder="###-###-####">
+                        <div class="invalidValue hideText" id="phoneNumberValidatorText">Please add a valid phone number ###-###-####</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Email</div>
+                        <input type="text" id="modifyCcontactEmail" placeholder="___@___.com">
+                        <div class="invalidValue hideText" id="emailValidatorText">Please add a valid email address ___@___.com</div>
+                    </div>
+                </div>
+                <div class="createModalFooter">
+                    <button type="button" class="create" onclick="updateContact();">Update Contact</button>
+                    <button type="button" class="close" onclick="handleCloseModifyContactModal();">Close</button>
+                </div>
+
+                <span id="contactAddResult"></span>
+
+            </div>
+        </div>
     </main>
     
     <script src="js/color.js"></script>
