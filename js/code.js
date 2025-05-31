@@ -4,7 +4,16 @@
 	let userId = 0;
 	let firstName = "";
 	let lastName = "";
+	let currentEditContactID = "";
 
+	function goToSignup()
+	{
+		window.location.href = "signup.html";
+	}
+	function goToLogin()
+	{
+		window.location.href = "index.html";
+	}
 	function doLogin()
 	{
 		userId = 0;
@@ -96,6 +105,7 @@
 		else
 		{
 			document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+			displayFirstFourContacts();
 		}
 	}
 
@@ -108,131 +118,258 @@
 		window.location.href = "index.html";
 	}
 
+	function clearAllAddContactValidators(){
+		const validatorEls = document.getElementsByClassName("invalidValue")
+		for (let i = 0; i < validatorEls.length; i++) {
+			validatorEls[i].classList.add("hideText");
+		}
+	
+	}
+
 	function addContact()
 	{
-	let firstName = document.getElementById("contactFirstName").value;
-	document.getElementById("contactAddResult").innerHTML = "";
-	//Output result of contact added later
-	let lastName = document.getElementById("contactLastName").value;
-	let phoneNumber = document.getElementById("contactPhone").value;
-	let email = document.getElementById("contactEmail").value;
+		clearAllAddContactValidators();
 
-	//Validate first name input
-	if(firstName == null || firstName == "") 
-	{
-		console.log("No first name");
-	}
-	
-	else
-	//Validate last name input
-	if(lastName == null || lastName == "")
-	{
-			console.log("No last name");
-	}
-	
-	else
-	// Validate phone number
-	if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
-	{
-		console.log(phoneNumber);
-		console.log("Invalid Phone Number");
-	}
+		let firstName = document.getElementById("contactFirstName").value;
+		document.getElementById("contactAddResult").innerHTML = "";
+		//Output result of contact added later
+		let lastName = document.getElementById("contactLastName").value;
+		let phoneNumber = document.getElementById("contactPhone").value;
+		let email = document.getElementById("contactEmail").value;
+		let isAllInputValid = true;
 
-	else
-	//Validate parts around "@" in email
-	if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
-	{
-		console.log("Invalid Email");
-	}
-
-	else
-	//Vlaidate parts around the "." in email
-	if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
-	{
-			console.log("Invalid Email. Needs proper address");
-	}
-
-	else
-	{	
-		let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
-		let jsonPayload = JSON.stringify( tmp );
-		console.log(jsonPayload);
-		let url = urlBase + '/AddContact.' + extension;
+		//Validate first name input
+		if(firstName == null || firstName == "") 
+		{
+			isAllInputValid = false;
+			document.getElementById("firstNameValidatorText").classList.remove("hideText");
+		}
 		
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-		try
+		//Validate last name input
+		if(lastName == null || lastName == "")
 		{
-			xhr.onreadystatechange = function() 
+			isAllInputValid = false;
+			document.getElementById("lastNameValidatorText").classList.remove("hideText");
+		}
+		
+		// Validate phone number
+		if(!isNaN(Number(phoneNumber)) == false || phoneNumber.length != 10 || phoneNumber == null || phoneNumber == "") 
+		{
+			isAllInputValid = false;
+			document.getElementById("phoneNumberValidatorText").classList.remove("hideText");
+		}
+
+		//Validate parts around "@" in email
+		if(email == null || email == "" || email.includes("@") == false || email.split("@")[0].length <= 0 || email.split("@")[1].length <= 0)
+		{
+			isAllInputValid = false;
+			document.getElementById("emailValidatorText").classList.remove("hideText");
+		}else
+
+		//Vlaidate parts around the "." in email
+		if(email.split("@")[1].includes(".") == false || email.split("@")[1].split(".")[0].length <= 0 || email.split("@")[1].split(".")[1].length <= 0)
+		{
+			isAllInputValid = false;
+			console.log("Invalid Email. Needs proper address");
+			document.getElementById("emailValidatorText").classList.remove("hideText");
+		}
+
+		if(isAllInputValid)
+		{	
+			let tmp = {firstName: firstName, lastName: lastName, phone: phoneNumber, email:email};
+			let jsonPayload = JSON.stringify( tmp );
+			console.log(jsonPayload);
+			let url = urlBase + '/AddContact.' + extension;
+			
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+			try
 			{
-				if (this.readyState == 4 && this.status == 200) 
+				xhr.onreadystatechange = function() 
 				{
-					document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-					console.log(xhr.responseText);
-				}
-			};
-			xhr.send(jsonPayload);
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+						console.log(xhr.responseText);
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				document.getElementById("contactAddResult").innerHTML = err.message;
+			}
 		}
-		catch(err)
-		{
-			document.getElementById("contactAddResult").innerHTML = err.message;
-		}
-	}
 	
 	}	
 
-	function searchContact()
+	function searchContact() 
 	{
-		let srch = document.getElementById("searchText").value;
-		document.getElementById("contactSearchResult").innerHTML = "";
-		
-		let contactList = "";
+		let srch = document.getElementById("searchText").value.trim();
+
+		if (srch === "") {
+		displayFirstFourContacts();
+		return;
+		}
+
+		let contactFlex = document.querySelector('.contactFlex');
+
+		if (!contactFlex) {
+			console.error("contactFlex element not found.");
+			return;
+		}
+
+		contactFlex.innerHTML = "";
 
 		let tmp = {search:srch};
 		let jsonPayload = JSON.stringify( tmp );
 
 		let url = urlBase + '/SearchContact.' + extension;
-		
+
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		try
 		{
-			xhr.onreadystatechange = function() 
+			xhr.onreadystatechange = function()
 			{
-				if (this.readyState == 4 && this.status == 200) 
+				if (this.readyState == 4 && this.status == 200)
 				{
-					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
 					let jsonObject = JSON.parse( xhr.responseText );
-					
+
 					console.log("Response from PHP:", jsonObject); //Php debugging
 
-					for( let i=0; i<jsonObject.results.length; i++ )
-					{
-						let c = jsonObject.results[i];
-
-						contactList += `${c.FirstName} ${c.LastName}, ${c.Email}, ${c.Phone}`; //Formatting results, emphasis on backticks "`"
-						if( i < jsonObject.results.length - 1 )
-						{
-							contactList += "<br />\r\n";
-						}
-						
-						//contactList += jsonObject.results[i];
-						//if( i < jsonObject.results.length - 1 )
-						//{
-						//	contactList += "<br />\r\n";
-						//}
+					if (!jsonObject.results || jsonObject.results.length === 0) {
+						return;
 					}
-					
-					document.getElementsByTagName("p")[0].innerHTML = contactList;
-				}
-			};
+
+					jsonObject.results.forEach(c => {
+						let div = document.createElement('div');
+						div.className = 'contactCard';
+						div.innerHTML = `
+							<div class="contactInfo">
+								<strong>${c.FirstName} ${c.LastName}</strong><br>
+								Phone: ${c.Phone}<br>
+								Email: ${c.Email}
+							</div>
+							<div class="contactActions">
+								<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
+								<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
+							</div>
+						`;
+						contactFlex.appendChild(div);
+					});
+				};
+			}
 			xhr.send(jsonPayload);
+
 		}
-		catch(err)
+		catch(err) 
 		{
 			document.getElementById("contactSearchResult").innerHTML = err.message;
 		}
-		
+	}
+
+	function displayFirstFourContacts()
+	{
+		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/GetContacts.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				let jsonObject = JSON.parse(xhr.responseText);
+				console.log("API Response:", jsonObject);
+				let contacts = jsonObject.results.slice(0, 4);
+				
+				let contactFlex = document.querySelector('.contactFlex');
+				if (!contactFlex) {
+					console.error("contactFlex element not found in HTML.");
+					return;
+				}
+
+				contactFlex.innerHTML = '';
+
+				contacts.forEach(c => {
+					console.log(c)
+					let div = document.createElement('div');
+					div.className = 'contactCard';
+					div.innerHTML = `
+						<div class="contactInfo">
+							<strong>${c.FirstName} ${c.LastName}</strong><br>
+							Phone: ${c.Phone}<br>
+							Email: ${c.Email}
+						</div>
+						<div class="contactActions">
+							<button onclick="modifyContact(${c.ID})">Modify</button>
+							<button onclick="handleOpenDeleteContactModal()">Delete</button>
+						</div>
+					`;
+					contactFlex.appendChild(div);
+				});
+			}
+		};
+
+		try {
+			xhr.send(jsonPayload);
+		} catch (err) {
+			console.error("Request failed:", err.message);
+		}
+	}
+
+	function modifyContact(id)
+	{
+
+		let tmp = {contactID: id}; // Ensure contactId is valid here
+		currentEditContactID = id;
+
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/SearchContactByID.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						document.getElementById("modifyContactFirstName").value = jsonObject.FirstName;
+						document.getElementById("modifyContactLastName").value = jsonObject.LastName;
+						document.getElementById("modifyContactPhone").value = jsonObject.Phone;
+						document.getElementById("modifyContactEmail").value = jsonObject.Email;
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
+			}
+
+
+		handleOpenModifyContactModal();
+
+
+
+	}
+
+	function doDelete()
+	{
+		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/DeleteContact.' + extension;
 	}

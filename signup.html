@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="container">
+        <div class="headerText">Retro-Reach</div>
+        <div class="headerDesc">Signup to continue</div>
+
         <input type="text" id="loginName" placeholder="Username">
+        <input type="text" id="firstName" placeholder="First Name">
+        <input type="text" id="lastName" placeholder="Last Name">
 
         <div class="password-wrapper">
             <input type="password" id="signupPassword" placeholder="Password">
@@ -23,6 +28,8 @@
 
         <div class="btn" onclick="doSignup();">Signup</div>
         <div id="signupResult"></div>
+        <div>Already have an account? <span class="loginBtn" onclick="goToLogin();">Login</span></div>
+
     </div>
 
     <div class="vaporwave-container">
