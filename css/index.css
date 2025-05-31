@@ -52,7 +52,7 @@ nav a:hover {
   margin: 20px 0;
   font-weight: 700;
   color: #f20e6e;
-  text-shadow: 0 0 5px #f20e6e, 0 0 10px #f20e6e;
+  text-shadow: 0 0 100px #f20e6e, 0 0 10px #f20e6e;
 }
 
 .searchContactContainer {
@@ -97,7 +97,7 @@ nav a:hover {
   display: block;
   margin: 0 auto;
   padding: 12px 20px;
-  background-color: #f20e6e;
+  background-color: rgb(86, 212, 86);
   color: #0f0c29;
   border: none;
   border-radius: 5px;
@@ -107,7 +107,7 @@ nav a:hover {
 }
 
 #createContactButton:hover {
-  background-color: #f20e6e;
+  background-color: rgb(86, 212, 86);
 }
 
 .contactsContainer {
