@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Retro-Reach</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="js/code.js"></script>
     <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function() 
@@ -12,31 +13,28 @@
 		}, false);
 	</script>
 </head>
+<body>
 <header class="retro-header">
     <div class="logo">Retro-Reach</div>
     <nav>
-        <a href="User_Contacts.html">Contacts</a>
-        <a href="aboutme.html">About Us</a>
+        <a href="User_Contacts.html">Home</a>
+        <a href="aboutus.html">About Us</a>
         <a href="#" onclick="doLogout()">Logout</a>
     </nav>
 </header>
-<body>
     <main>
-        <div id="userName" class="intro-text">Hello</div>
+        <div id="userName" class="intro-text"></div>
 
         <div class="searchContactContainer">
             <input type="text" id="searchText" placeholder="Search for a contact...">
             <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();">Search</button>
         </div>
         <p id="contactList"></p> <br /><br />
-
-
+        <div class="responsiveContainer">
         <div id="createContactButton" onclick="handleOpenCreateContactModal()">Create Contact</div>
-        <div class="contactsContainer">
-            <div class="contactsMain">
-                <div class="contactFlex"></div>
-            </div>
         </div>
+        <div class="contactFlex"></div>
+
         
         <div id="createModalContainer" class="createModalContainer closedModal">
             <div class="createModalMain">
