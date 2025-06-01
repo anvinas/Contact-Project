@@ -41,14 +41,14 @@
 			$last  = "%" . $searchFirstLast[1] . "%";
 			
 			//prepares SQL command
-			$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
+			$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
 			$stmt->bind_param("ssi", $first, $last, $userID);
 		} 
 		else 
 		{
 			//Dynamic string assigned in the case of only firstName or lastName given
 			$name = "%" . $search . "%";
-			$stmt = $conn->prepare("SELECT FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
+			$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Email, Phone FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
 			$stmt->bind_param("ssi", $name, $name, $userID);
 		}
 

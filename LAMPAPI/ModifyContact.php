@@ -40,7 +40,7 @@
             //Checks for any edited users, else returns error
             if ( $stmt->affected_rows > 0)
             {
-                returnWithInfo($firstName, $lastName, $contactId);
+                returnWithInfo($firstName, $lastName, $phone, $email,$contactId);
             }
             else 
             {
@@ -64,10 +64,15 @@
             sendResultInfoAsJson( $retValue );
         }
         
-        function returnWithInfo( $firstName, $lastName, $id )
+        function returnWithInfo($firstName, $lastName, $phone, $email, $id)
         {
-            $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
-            sendResultInfoAsJson( $retValue );
+            $retValue = '{"id":' . $id . 
+                        ',"firstName":"' . $firstName . 
+                        '","lastName":"' . $lastName . 
+                        '","phone":"' . $phone . 
+                        '","email":"' . $email . 
+                        '","error":""}';
+            sendResultInfoAsJson($retValue);
         }
 
         function getRequestInfo()
