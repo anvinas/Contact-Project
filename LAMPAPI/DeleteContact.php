@@ -17,7 +17,7 @@
     $inData = getRequestInfo(); //Receives JSON payload
     
     // Validating contact ID input
-    if (!isset($inData["contactId"]) || !is_numeric($inData["contactId"]) || $inData["contactId"] <= 0) 
+    if (!isset($inData["contactID"]) || !is_numeric($inData["contactID"]) || $inData["contactID"] <= 0) 
     {
         returnWithError("Invalid or missing contact ID");
         exit();
