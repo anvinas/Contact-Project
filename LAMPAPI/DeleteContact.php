@@ -15,7 +15,14 @@
     }
     
     $inData = getRequestInfo(); //Receives JSON payload
-
+    
+    // Validating contact ID input
+    if (!isset($inData["contactId"]) || !is_numeric($inData["contactId"]) || $inData["contactId"] <= 0) 
+    {
+        returnWithError("Invalid or missing contact ID");
+        exit();
+    }
+    
     //Logs into server
     $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
@@ -24,7 +31,7 @@
     $lastName = $inData["lastName"];
     $phone = $inData["phone"];
     $email = $inData["email"];
-    $contactId = $inData["contactId"];
+    $contactId = $inData["contactID"];
 
     if ($conn->connect_error)
     {
@@ -33,8 +40,8 @@
     else
     {
         //Prepares SQL command
-        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ? AND UserID = ?");
-        $stmt->bind_param("ii", $contactId, $userID);
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID = ?");
+        $stmt->bind_param("i", $contactId);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0){
@@ -67,9 +74,12 @@
 		sendResultInfoAsJson( $retValue );
 	}
 		
-	function returnWithInfo( $searchResults )
-	{
-		$retValue = '{"results":[' . $searchResults . '],"error":""}';
-		sendResultInfoAsJson( $retValue );
-	}
+	function returnWithInfo($message)
+    {
+        $retValue = json_encode([
+            "message" => $message,
+            "error" => ""
+        ]);
+        sendResultInfoAsJson($retValue);
+    }
 ?>
