@@ -1,4 +1,5 @@
- @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 
 body{
     display: flex;
@@ -6,7 +7,7 @@ body{
     justify-content: center;
     height: 100vh;
     background-color: black;
-    font-family: "Roboto", sans-serif;
+    font-family: "Orbitron", sans-serif;
     position: relative;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -17,7 +18,7 @@ body{
 }
 
 .headerText {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Rock Salt', cursive;
   color: #f20e6e;
   text-shadow: 0 0 100px #f20e6e, 0 0 10px #f20e6e;
   font-size:1.5rem
@@ -230,7 +231,7 @@ body{
 
 input[type="text"],
 input[type="password"] {
-  font-family: 'Press Start 2P', monospace;
+  font-family: "Orbitron", sans-serif;
   background-color: #1a1a1a; /* stays constant even when typing */
   color: #a0aec0; /* light blue */
   border: 2px solid transparent;
@@ -246,8 +247,8 @@ input[type="password"] {
 }
 
 input::placeholder {
+  font-family: "Orbitron", sans-serif;
   color: #a0aec0; /* same light blue as input text */
-  font-family: 'Press Start 2P', monospace;
   font-size: 12px;
   font-style: normal;
 }

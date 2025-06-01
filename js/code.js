@@ -4,7 +4,7 @@
 	let userId = 0;
 	let firstName = "";
 	let lastName = "";
-	let currentEditContactID = "";
+	let currentEditContactID = -1;
 
 	function goToSignup()
 	{
@@ -255,7 +255,7 @@
 							</div>
 							<div class="contactActions">
 								<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
-								<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
+								<button class="btn" onclick="handleOpenDeleteContactModal(${c.ID})">Delete</button>
 							</div>
 						`;
 						contactFlex.appendChild(div);
@@ -297,22 +297,51 @@
 
 				contactFlex.innerHTML = '';
 
-				contacts.forEach(c => {
-					console.log(c)
-					let div = document.createElement('div');
-					div.className = 'contactCard';
-					div.innerHTML = `
-						<div class="contactInfo">
-							<strong>${c.FirstName} ${c.LastName}</strong><br>
-							Phone: ${c.Phone}<br>
-							Email: ${c.Email}
-						</div>
-						<div class="contactActions">
-							<button onclick="modifyContact(${c.ID})">Modify</button>
-							<button onclick="handleOpenDeleteContactModal()">Delete</button>
-						</div>
+				jsonObject.results.forEach(c => {
+					const wrapper = document.createElement('div');
+					wrapper.className = 'contactRowWrapper';
+
+					// Profile Initials
+					const profile = document.createElement('div');
+					profile.className = 'contactProfileCircle';
+					const initials = (c.FirstName?.[0] || '') + (c.LastName?.[0] || '');
+					profile.textContent = initials.toUpperCase();
+
+					// Card container
+					const responsiveContainer = document.createElement('div');
+					responsiveContainer.className = 'responsiveContainer';
+
+					const card = document.createElement('div');
+					card.className = 'contactCard';
+
+					const info = document.createElement('div');
+					info.className = 'contactInfo';
+					info.innerHTML = `
+					<h3>${c.FirstName} ${c.LastName}</h3>
+					<p>${c.Phone}</p>
+					<p>${c.Email}</p>
 					`;
-					contactFlex.appendChild(div);
+
+					card.appendChild(info);
+					responsiveContainer.appendChild(card);
+
+					// Buttons
+					const actions = document.createElement('div');
+					actions.className = 'contactActions';
+					actions.innerHTML = `
+					<button onclick="modifyContact(${c.ID})">
+						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+					</button>
+					<button onclick="deleteContact(${c.ID})">
+						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
+					</button>
+					`;
+
+					// Append all
+					wrapper.appendChild(profile);
+					wrapper.appendChild(responsiveContainer);
+					wrapper.appendChild(actions);
+					contactFlex.appendChild(wrapper);
 				});
 			}
 		};
@@ -367,9 +396,158 @@
 
 	}
 
+	function updateContact()
+	{
+		
+		if(currentEditContactID == -1)
+		{
+			console.log("Selected Contact ID not found");
+			return;
+		}
+		else
+		{
+
+		changedFistName = document.getElementById("modifyContactFirstName").value;
+		changedLastName = document.getElementById("modifyContactLastName").value;
+		changedPhone = document.getElementById("modifyContactPhone").value;
+		changedEmail = document.getElementById("modifyContactEmail").value;
+
+
+		let tmp = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}; // Ensure contactId is valid here
+		console.log(tmp);
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/ModifyContact.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						//ADD Toast here if successfull
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
+			}
+
+		currentEditContactID = -1;
+
+		handleCloseModifyContactModal();
+
+		}
+
+	}
+
+
+
+
+
 	function doDelete()
 	{
-		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let tmp = {contactID: currentEditContactID }; // Ensure userId is valid here
+		console.log(tmp);
+		console.log(currentEditContactID);
 		let jsonPayload = JSON.stringify(tmp);
 		let url = urlBase + '/DeleteContact.' + extension;
+
+		
+		console.log(tmp);
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						//ADD Toast here if successfull
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
+				console.log("error", err);
+			}
+
+			
+
+		currentEditContactID = -1;
+		console.log(currentEditContactID);
+		handleCloseDeleteContactModal();
 	}
+
+
+
+	//modals
+	const handleOpenCreateContactModal = ()=>{
+    const modalEl = document.querySelector("#createModalContainer");
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Create Contact Modal
+const handleCloseCreateContactModal = ()=>{
+    const modalEl = document.querySelector("#createModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
+
+//Handle Open My Delete Contact Modal
+const handleOpenDeleteContactModal = (ID)=>{
+    const modalEl = document.querySelector("#deleteModalContainer");
+    currentEditContactID = ID;
+
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Delete Contact Modal
+const handleCloseDeleteContactModal = ()=>{
+    const modalEl = document.querySelector("#deleteModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
+
+
+//Handle Open My Modify Contact Modal
+const handleOpenModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Modify Contact Modal
+const handleCloseModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}

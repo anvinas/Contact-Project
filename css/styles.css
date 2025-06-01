@@ -1,140 +1,55 @@
-body 
+.html 
 {
-    background-color: #707070;
+  margin: 0;
+  padding: 0;
 }
 
-#title 
-{
-    font-size: 40px;
-    width: 100%;
-    margin: 2% 5%;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+.retro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: #070614;
+  border-bottom: 3px solid #FF4ECD;
+  box-shadow: 0 0 20px #57E2E5;
+  font-family: 'Press Start 2P', monospace;
+  color: #57E2E5;
+  top: 0;
+  left: 0;
+  z-index: 101;
 }
 
-#loginDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+.logo {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: #FF4ECD;
+  text-shadow: 0 0 5px #FF4ECD, 0 0 15px #ED6A5E;
 }
 
-#loggedInDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+nav a {
+  margin-left: 30px;
+  font-size: 0.75rem;
+  color: #57E2E5;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-#accessUIDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: #ED6A5E;
+  transition: width 0.3s ease;
 }
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
+nav a:hover {
+  color: #ED6A5E;
 }
 
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
-#loginName
-{
-	font-size: 30px;
-}
-#loginPassword
-{
-	font-size: 30px;
-}
-#searchText
-{
-	font-size: 30px;
-}
-#colorText
-{
-	font-size: 30px;
-}
-
-input[type="text"],input[type="password"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-#loginResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
-
-#logoutButton{
-    width: 20%;
-    margin-left: 40%;
-}
-
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#colorSearchResult{
-    display: none;
-}
-
-#colorAddResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+nav a:hover::after {
+  width: 100%;
 }

@@ -5,7 +5,7 @@
 body {
   margin: 0;
   font-family: 'Exo', sans-serif;
-  background-color: #0f0c29;
+  background-color: #070614;
   color: #ffffff;
 }
 
@@ -13,46 +13,14 @@ main {
   padding: 0 15vw;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
-  padding: 16px 32px;
-  border-bottom: 2px solid #f20e6e;
-}
-
-.logo {
-  font-size: 1.5em;
-  font-family: 'Press Start 2P', cursive;
-  color: #f20e6e;
-  text-shadow: 0 0 5px #f20e6e, 0 0 10px #f20e6e;
-}
-
-nav {
-  display: flex;
-  gap: 24px;
-}
-
-nav a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1em;
-  transition: color 0.3s, text-shadow 0.3s;
-}
-
-nav a:hover {
-  color: #f20e6e;
-  text-shadow: 0 0 8px #f20e6e, 0 0 15px #f20e6e;
-}
 
 .intro-text {
   font-size: 2rem;
   text-align: center;
   margin: 20px 0;
   font-weight: 700;
-  color: #f20e6e;
-  text-shadow: 0 0 100px #f20e6e, 0 0 10px #f20e6e;
+  color: #FF4ECD;
+  text-shadow: 0 0 10px #FF4ECD;
 }
 
 .searchContactContainer {
@@ -65,23 +33,22 @@ nav a:hover {
 .searchContactContainer input {
   width: 300px;
   padding: 10px;
-  border: none;
+  border: 1px solid #FF4ECD;
   border-radius: 5px 0 0 5px;
   font-size: 1rem;
-  color: #f20e6e;
+  color: #FF4ECD;
   background-color: #1a1a2e;
-  border: 1px solid #f20e6e;
 }
 
 .searchContactContainer input:focus {
   outline: none;
-  border-color: #89ff92;
+  border-color: #ED6A5E;
 }
 
 #searchContactButton {
   padding: 10px 20px;
-  border: 1px solid #f20e6e;
-  background-color: #f20e6e;
+  border: 1px solid #FF4ECD;
+  background-color: #FF4ECD;
   color: white;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
@@ -89,88 +56,116 @@ nav a:hover {
   transition: background-color 0.3s, transform 0.2s;
 }
 
-#searchContactButton:hover {
-  background-color: #c5125d;
+
+.responsiveContainer {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
 #createContactButton {
   display: block;
-  margin: 0 auto;
+  margin: 40px auto 30px auto;
   padding: 12px 20px;
-  background-color: rgb(86, 212, 86);
-  color: #0f0c29;
+  background-color: #57E2E5;
+  color: #153131;
   border: none;
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
 }
 
-#createContactButton:hover {
-  background-color: rgb(86, 212, 86);
-}
-
-.contactsContainer {
-  margin: 30px 0;
-}
-
-.contactsMain {
-  border: 2px solid #f20e6e;
-  border-radius: 5px;
-  background-color: #1a1a2e;
-  padding: 10px;
-}
-
-.contactCard {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1f1f2e;
-  padding: 16px 24px;
-  border-bottom: 1px solid #f20e6e;
-  color: white;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.contactCard:hover {
-  background-color: #302b63;
-  transform: scale(1.01);
-}
-
-.contactInfo {
-  flex: 1;
-  font-size: 1rem;
-}
-
-.contactActions {
-  display: flex;
-  gap: 10px;
-}
-
-.contactActions button {
-  width: 80px;
-  height: 40px;
-  background-color: #f20e6e;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.contactRowWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  margin-bottom: 5px;
+  padding: 12px 20px;
+}
+
+
+.contactCard {
+  width: 104%;
+  padding: 16px 20px;
+  background-color: #1f1f2e;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   color: white;
-  border-radius: 7px;
-  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-sizing: border-box;
+  padding: 12px 20px;
+}
+
+.contactCard:hover {
+  background-color: #ED6A5E;
+  transform: scale(1.01);
+}
+
+/* Profile picture - floated absolutely to the left */
+.contactProfileCircle {
+  position: absolute;
+  left: -70px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background-color: #FF4ECD;
+  color: white;
   font-weight: bold;
+  font-size: 1.2rem;
+  font-family: 'Press Start 2P', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #FF4ECD;
+  z-index: 2;
+}
+
+/* Action buttons - floated absolutely to the right */
+.contactActions {
+  position: absolute;
+  right: -70px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2;
+}
+
+.contactActions button {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  background-color: #FF4ECD;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 .contactActions button:hover {
-  background-color: #e54646;
+  background-color: #ED6A5E;
 }
 
-.deleteModalBody{
+.deleteModalBody {
   padding: 20px;
 }
 
-.createModalContainer,.deleteModalContainer,.modifyModalContainer{
+.createModalContainer,
+.deleteModalContainer,
+.modifyModalContainer {
   position: fixed;
   top: 0;
   left: 0;
@@ -183,73 +178,31 @@ nav a:hover {
   overflow-y: hidden;
 }
 
-.modalInputContainer{
-    padding: 0px 20px;
-    display: flex;
-    flex-direction: column;
-    max-width: 100%;
-    .desc{
-        margin: 5px 0 ;
-        font-size: 17px;
-        font-weight: 300;
-    }
-    input{
-        padding: 10px;
-        border: 1px solid #0c0c0c;
-        border-radius: 5px;
-        font-size: 1rem;
-        color: #f20e6e;
-        transition: border-color 0.3s;
-        background-color: #0f0c29;
-        &::placeholder{
-            color: #ffffff60; 
-        }
-        &:focus {
-            border-color: #f20e6e;
-            outline: none;
-        }
-    }
-}
-
-.createModalMain,.deleteModalMain {
-  width: 400px;
-  background-color: #1a1a2e;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #f20e6e;
-  overflow: hidden;
-}
-
-.createModalHeader,.deleteModalHeader {
-  padding: 16px;
-  font-size: 20px;
-  text-align: center;
-  background-color: #f20e6e;
-  color: white;
-}
-
 .modalInputContainer {
-  padding: 16px;
+  padding: 0px 20px;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .modalInputContainer .desc {
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-  color: #89ff92;
+  margin: 5px 0;
+  font-size: 17px;
+  font-weight: 300;
 }
 
 .modalInputContainer input {
   padding: 10px;
-  border: 1px solid #f20e6e;
+  border: 1px solid #FF4ECD;
   border-radius: 5px;
   font-size: 1rem;
-  background-color: #0f0c29;
-  color: white;
+  color: #FF4ECD;
+  background-color: #153131;
+  transition: border-color 0.3s;
 }
 
 .modalInputContainer input:focus {
-  border-color: #89ff92;
+  border-color: #ED6A5E;
   outline: none;
 }
 
@@ -257,17 +210,42 @@ nav a:hover {
   color: #ffffff60;
 }
 
-.createModalFooter,.deleteModalFooter {
+.createModalMain,
+.deleteModalMain {
+  width: 400px;
+  background-color: #1a1a2e;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #FF4ECD;
+  overflow: hidden;
+}
+
+.createModalHeader,
+.deleteModalHeader {
+  padding: 16px;
+  font-size: 20px;
+  text-align: center;
+  background-color: #FF4ECD;
+  color: white;
+}
+
+.modalInputContainer .desc {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #ED6A5E;
+}
+
+.createModalFooter,
+.deleteModalFooter {
   padding: 16px;
   display: flex;
   justify-content: space-between;
 }
 
-
-.createModalFooter button,.deleteModalFooter button {
+.createModalFooter button,
+.deleteModalFooter button {
   width: 90px;
   height: 40px;
-  background-color: #f20e6e;
+  background-color: #FF4ECD;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -279,22 +257,24 @@ nav a:hover {
   font-weight: bold;
 }
 
-.deleteModalFooter button.delete{
+.deleteModalFooter button.delete {
   background-color: #ff0000;
-  &:hover{
-    background-color: #d50101;
-    cursor: pointer;
-  }
 }
-.deleteModalFooter button.close{
+
+.deleteModalFooter button.delete:hover {
+  background-color: #d50101;
+}
+
+.deleteModalFooter button.close {
   background-color: #a4a4a4;
-  &:hover{
-    cursor: pointer;
-    background-color: #818181;
-  }
 }
+
+.deleteModalFooter button.close:hover {
+  background-color: #818181;
+}
+
 .createModalFooter .create:hover {
-  background-color: #6bd471;
+  background-color: #ED6A5E;
 }
 
 .createModalFooter .close:hover {
@@ -305,13 +285,10 @@ nav a:hover {
   display: none;
 }
 
-
-
-/* Reusable .btn class */
 .btn {
   width: 80px;
   height: 40px;
-  background-color: #f20e6e;
+  background-color: #FF4ECD;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -324,15 +301,15 @@ nav a:hover {
 }
 
 .btn:hover {
-  background-color: #e54646;
+  background-color: #ED6A5E;
 }
 
-.invalidValue{
+.invalidValue {
   color: red;
   font-size: 0.78rem;
   transition: all 0.3s ease-in;
 }
 
-.hideText{
+.hideText {
   opacity: 0;
 }
