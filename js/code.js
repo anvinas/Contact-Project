@@ -4,7 +4,7 @@
 	let userId = 0;
 	let firstName = "";
 	let lastName = "";
-	let currentEditContactID = "";
+	let currentEditContactID = -1;
 
 	function goToSignup()
 	{
@@ -255,7 +255,7 @@
 							</div>
 							<div class="contactActions">
 								<button class="btn" onclick="modifyContact(${c.ID})">Modify</button>
-								<button class="btn" onclick="deleteContact(${c.ID})">Delete</button>
+								<button class="btn" onclick="handleOpenDeleteContactModal(${c.ID})">Delete</button>
 							</div>
 						`;
 						contactFlex.appendChild(div);
@@ -309,7 +309,7 @@
 						</div>
 						<div class="contactActions">
 							<button onclick="modifyContact(${c.ID})">Modify</button>
-							<button onclick="handleOpenDeleteContactModal()">Delete</button>
+							<button onclick="doDelete(${c.ID})">Delete</button>
 						</div>
 					`;
 					contactFlex.appendChild(div);
@@ -367,9 +367,158 @@
 
 	}
 
+	function updateContact()
+	{
+		
+		if(currentEditContactID == -1)
+		{
+			console.log("Selected Contact ID not found");
+			return;
+		}
+		else
+		{
+
+		changedFistName = document.getElementById("modifyContactFirstName").value;
+		changedLastName = document.getElementById("modifyContactLastName").value;
+		changedPhone = document.getElementById("modifyContactPhone").value;
+		changedEmail = document.getElementById("modifyContactEmail").value;
+
+
+		let tmp = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}; // Ensure contactId is valid here
+		console.log(tmp);
+		let jsonPayload = JSON.stringify(tmp);
+		let url = urlBase + '/ModifyContact.' + extension;
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						//ADD Toast here if successfull
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
+			}
+
+		currentEditContactID = -1;
+
+		handleCloseModifyContactModal();
+
+		}
+
+	}
+
+
+
+
+
 	function doDelete()
 	{
-		let tmp = {UserID: userId }; // Ensure userId is valid here
+		let tmp = {contactID: currentEditContactID }; // Ensure userId is valid here
+		console.log(tmp);
+		console.log(currentEditContactID);
 		let jsonPayload = JSON.stringify(tmp);
 		let url = urlBase + '/DeleteContact.' + extension;
+
+		
+		console.log(tmp);
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		try
+		{
+				xhr.onreadystatechange = function() 
+				{
+					if (this.readyState == 4 && this.status == 200) 
+					{
+						let jsonObject = JSON.parse( xhr.responseText );
+						
+						console.log("Response from PHP:", jsonObject); //Php debugging
+
+						//ADD Toast here if successfull
+					}
+				};
+				xhr.send(jsonPayload);
+			}
+			catch(err)
+			{
+				//document.getElementById("contactSearchResult").innerHTML = err.message;
+				console.log("error", err);
+			}
+
+			
+
+		currentEditContactID = -1;
+		console.log(currentEditContactID);
+		handleCloseDeleteContactModal();
 	}
+
+
+
+	//modals
+	const handleOpenCreateContactModal = ()=>{
+    const modalEl = document.querySelector("#createModalContainer");
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Create Contact Modal
+const handleCloseCreateContactModal = ()=>{
+    const modalEl = document.querySelector("#createModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
+
+//Handle Open My Delete Contact Modal
+const handleOpenDeleteContactModal = (ID)=>{
+    const modalEl = document.querySelector("#deleteModalContainer");
+    currentEditContactID = ID;
+
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Delete Contact Modal
+const handleCloseDeleteContactModal = ()=>{
+    const modalEl = document.querySelector("#deleteModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
+
+
+//Handle Open My Modify Contact Modal
+const handleOpenModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    console.log(modalEl)
+    if(modalEl){
+        modalEl.classList.remove("closedModal")
+    }
+}
+
+// Handle closing My Modify Contact Modal
+const handleCloseModifyContactModal = ()=>{
+    const modalEl = document.querySelector("#modifyModalContainer");
+    if(modalEl){
+        modalEl.classList.add("closedModal")
+    }
+}
