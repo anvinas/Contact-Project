@@ -1,28 +1,29 @@
 <?php
 
-	session_start();
+	session_start(); //Session start for server-side ID Caching
 
 	//CORS headers
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: Content-Type");
 	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
+	$inData = getRequestInfo(); //receives JSON payload
 
-	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
+	//Server login
+	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); 
 
-	$inData = getRequestInfo();
-	
+
 	$id = 0;
 	$firstName = "";
 	$lastName = "";
 
-	$conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); 	
 	if( $conn->connect_error )
 	{
 		returnWithError( $conn->connect_error );
 	}
 	else
 	{
+		//Prepares SQL command
 		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
 		$stmt->bind_param("ss", $inData["login"], $inData["password"]);
 		$stmt->execute();

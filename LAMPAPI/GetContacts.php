@@ -1,32 +1,30 @@
 <?php
+    //This php file returns ALL contacts for a specific userID
 
-    //This php file returns contacts for a specific userID
-
-
-    session_start();
+    session_start(); // Session start for server-side ID Caching
 
     // CORS headers
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-    //Scans userID from session
-    $userId = $_SESSION("UserID");
-
     //Checks if a user is logged in
-    if (!isset($_SESSION("userID"))) 
+    if (!isset($_SESSION["userID"])) 
     {
         returnWithError("User not logged in"); 
         exit();
     }
 
-    $conn = new mysqli("localhost", "Retro", "Reach", "COP4331"); //Logs into DB
+    //Logs into server
+    $conn = new mysqli("localhost", "Retro", "Reach", "COP4331");
 
-    if ($conn->connect_error())
+    //Scans userID from session
+    $userID = $_SESSION["userID"];
+
+    if ($conn->connect_error)
     {
-        returnWithError($conn->connect_error); //error logging in
+        returnWithError($conn->connect_error); 
     }
-
     else 
     {
         $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email FROM Contacts WHERE UserID = ?"); //pushes new contact
@@ -37,7 +35,7 @@
         $contacts = array(); //user-specific contacts array
 
         //Populates array with contacts based on User ID
-        while ($row = $results->fetch_assoc())
+        while ($row = $result->fetch_assoc())
         {
             $contacts[] = $row;
         }
@@ -48,17 +46,20 @@
         $conn->close();
     }
 
-    function sendResultInfoAsJson($obj) {
+    function sendResultInfoAsJson($obj) 
+    {
         header('Content-type: application/json');
         echo json_encode($obj);
     }
 
-    function returnWithError($err) {
+    function returnWithError($err) 
+    {
         $retValue = array("results" => [], "error" => $err);
         sendResultInfoAsJson($retValue);
     }
 
-    function returnWithInfo($results) {
+    function returnWithInfo($results) 
+    {
         $retValue = array("results" => $results, "error" => "");
         sendResultInfoAsJson($retValue);
     }
