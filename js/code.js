@@ -17,7 +17,7 @@
 
 	function doSignUp()
 	{		
-		let userName = document.getElementById("loginName").value;
+		let userName = document.getElementById("username").value;
 		let firstName = document.getElementById("firstName").value;
 		let lastName = document.getElementById("lastName").value;
 		let signUpPassword = document.getElementById("signupPassword").value;
