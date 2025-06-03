@@ -121,7 +121,7 @@ class Pacman {
         this.EL.style.top = `${this.y}px`;
     }
     updatePacmanImage(){
-        this.EL.src = `/public/pacman/pacman${this.animationFrame}.png`;
+        this.EL.src = `public/pacman/pacman${this.animationFrame}.png`;
     }
     rotatePacman(){
         if(this.curMovingDir === this.lastMovingDir) return;
