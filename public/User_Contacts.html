@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retro-Reach</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/code.js"></script>
+    <script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() 
+		{
+			readCookie();
+		}, false);
+	</script>
+</head>
+<body>
+<header class="retro-header">
+    <div class="logo">Retro-Reach</div>
+    <nav>
+        <a href="User_Contacts.html">Home</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="#" onclick="doLogout()">Logout</a>
+    </nav>
+</header>
+    <main>
+        <div id="userName" class="intro-text"></div>
+
+        <div class="searchContactContainer">
+            <input type="text" id="searchText" placeholder="Search for a contact...">
+            <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();">Search</button>
+        </div>
+        <p id="contactList"></p>
+        <div class="responsiveContainer">
+        <div id="createContactButton" onclick="handleOpenCreateContactModal()">Create Contact</div>
+        </div>
+        <div class="contactFlex"></div>
+
+        
+        <div id="createModalContainer" class="createModalContainer closedModal">
+            <div class="createModalMain">
+                <div class="createModalHeader">Create Contact</div>
+                <div class="createModalBody">
+                    <div class="modalInputContainer">
+                        <div class="desc">First Name</div>
+                        <input type="text" id="contactFirstName" placeholder="First Name">
+                        <div class="invalidValue hideText" id="firstNameValidatorText">Please add a first name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Last Name</div>
+                        <input type="text" id="contactLastName" placeholder="Last Name">
+                        <div class="invalidValue hideText" id="lastNameValidatorText">Please add a last name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Phone Number</div>
+                        <input type="text" id="contactPhone" placeholder="###-###-####">
+                        <div class="invalidValue hideText" id="phoneNumberValidatorText">Please add a valid phone number ###-###-####</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Email</div>
+                        <input type="text" id="contactEmail" placeholder="___@___.com">
+                        <div class="invalidValue hideText" id="emailValidatorText">Please add a valid email address ___@___.com</div>
+                    </div>
+                </div>
+                <div class="createModalFooter">
+                    <button type="button" class="create" onclick="addContact();">Add Contact</button>
+                    <button type="button" class="close" onclick="handleCloseCreateContactModal();">Close</button>
+                </div>
+
+                <span id="contactAddResult"></span>
+
+            </div>
+        </div>
+        <div id="deleteModalContainer" class="deleteModalContainer closedModal">
+            <div class="deleteModalMain">
+                <div class="deleteModalHeader">Delete Contact</div>
+                <div class="deleteModalBody">
+                    <div class="infoText">Are you sure you want to delete this user?</div>
+                </div>
+                <div class="deleteModalFooter">
+                    <button type="button" class="delete" onclick="doDelete();">Delete</button>
+                    <button type="button" class="close" onclick="handleCloseDeleteContactModal();">Close</button>
+                </div>
+
+                <span id="contactAddResult"></span>
+
+            </div>
+        </div>
+
+        <div id="modifyModalContainer" class="modifyModalContainer closedModal ">
+            <div class="createModalMain">
+                <div class="createModalHeader">Modify Contact</div>
+                <div class="createModalBody">
+                    <div class="modalInputContainer">
+                        <div class="desc">First Name</div>
+                        <input type="text" id="modifyContactFirstName" placeholder="First Name">
+                        <div class="invalidValue hideText" id="firstNameValidatorText">Please add a first name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Last Name</div>
+                        <input type="text" id="modifyContactLastName" placeholder="Last Name">
+                        <div class="invalidValue hideText" id="lastNameValidatorText">Please add a last name</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Phone Number</div>
+                        <input type="text" id="modifyContactPhone" placeholder="###-###-####">
+                        <div class="invalidValue hideText" id="phoneNumberValidatorText">Please add a valid phone number ###-###-####</div>
+                    </div>
+                    <div class="modalInputContainer">
+                        <div class="desc">Email</div>
+                        <input type="text" id="modifyContactEmail" placeholder="___@___.com">
+                        <div class="invalidValue hideText" id="emailValidatorText">Please add a valid email address ___@___.com</div>
+                    </div>
+                </div>
+                <div class="createModalFooter">
+                    <button type="button" class="create" onclick="updateContact();">Update Contact</button>
+                    <button type="button" class="close" onclick="handleCloseModifyContactModal();">Close</button>
+                </div>
+
+                <span id="contactAddResult"></span>
+
+            </div>
+        </div>
+    </main>
+    
+    <script src="js/color.js"></script>
+</body>
+</html>

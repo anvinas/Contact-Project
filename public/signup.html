@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="./js/code.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="headerText">Retro-Reach</div>
+        <div class="headerDesc">Signup to continue</div>
+
+        <input type="text" id="loginName" placeholder="Username">
+        <input type="text" id="firstName" placeholder="First Name">
+        <input type="text" id="lastName" placeholder="Last Name">
+
+        <div class="password-wrapper">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <img src="./public/svg/eye_opened.svg" class="eyeClosed" alt="Eye Icon" onclick="togglePasswordVisibility(event)">
+        </div>
+
+        <div class="password-wrapper">
+            <input type="password" id="signupPasswordConf" placeholder="Confirm Password"></input>
+            <img src="./public/svg/eye_opened.svg" class="eyeClosed" alt="Eye Icon" onclick="togglePasswordVisibility(event)">
+        </div>
+
+        <div class="btn" onclick="doSignup();">Signup</div>
+        <div id="signupResult"></div>
+        <div>Already have an account? <span class="loginBtn" onclick="goToLogin();">Login</span></div>
+
+    </div>
+
+    <div class="vaporwave-container">
+        <img src="./public/grid-4.png" id="vapor-grid" alt="Vaporwave Image">
+        <div id="sun-wrapper">
+            <img src="./public/sun.png" id="vapor-sun" alt="Vaporwave Image"> 
+        </div>
+        <div id="star-wrapper">
+            <div class="stars-container"></div>
+        </div>
+        <img src="./public/tree-2.png" id="vapor-tree" alt="Vaporwave Image"> 
+    </div>
+
+    <script src="./js/signupPage.js"></script>
+</body>
+</html>
