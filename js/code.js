@@ -777,9 +777,9 @@
 
 							//ADD Toast here if successfull
 							//add new data to html
-							document.querySelector(`#contactRowWrapper_${currentEditContactID} > .contactInfo > h3`).innerHTML = jsonObject.FirstName + " " + jsonObject.LastName;
-							document.querySelector(`#contactRowWrapper_${currentEditContactID} > .contactInfo > p:nth-child(2)`).innerHTML = jsonObject.Phone;
-							document.querySelector(`#contactRowWrapper_${currentEditContactID} > .contactInfo > p:nth-child(3)`).innerHTML = jsonObject.Email;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > h3`).innerHTML = jsonObject.FirstName + " " + jsonObject.LastName;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(2)`).innerHTML = jsonObject.Phone;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(3)`).innerHTML = jsonObject.Email;
 
 						}
 					};
