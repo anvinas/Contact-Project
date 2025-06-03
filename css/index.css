@@ -83,14 +83,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   margin-bottom: 5px;
   padding: 12px 20px;
 }
 
 
 .contactCard {
-  width: 104%;
+  width: 100%;
   padding: 16px 20px;
   background-color: #1f1f2e;
   border-radius: 20px;
@@ -108,10 +107,6 @@ main {
 
 /* Profile picture - floated absolutely to the left */
 .contactProfileCircle {
-  position: absolute;
-  left: 0px;
-  top: 50%;
-  transform: translateY(-50%);
   width: 60px;
   height: 60px;
   background-color: #FF4ECD;
@@ -129,10 +124,6 @@ main {
 
 /* Action buttons - floated absolutely to the right */
 .contactActions {
-  position: absolute;
-  right: -70px;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 8px;
