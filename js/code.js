@@ -147,7 +147,7 @@
 	{
 		userId = -1;
 		let data = document.cookie;
-		let splits = data.split(";");
+		let splits = data.split(",");
 		for(var i = 0; i < splits.length; i++) 
 		{
 			let thisOne = splits[i].trim();
@@ -173,8 +173,6 @@
 		}
 		else
 		{
-			console.log("First Name: " + firstName);
-			console.log("Last Name: " + lastName);
 			document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 			displayFirstFourContacts();
 		}
