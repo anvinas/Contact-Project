@@ -192,7 +192,6 @@
 		for (let i = 0; i < validatorEls.length; i++) {
 			validatorEls[i].classList.add("hideText");
 		}
-	
 	}
 
 	function addContact()
@@ -314,51 +313,52 @@
 					}
 
 					jsonObject.results.forEach(c => {
-					const wrapper = document.createElement('div');
-					wrapper.className = 'contactRowWrapper';
+						const wrapper = document.createElement('div');
+						wrapper.className = 'contactRowWrapper';
+						wrapper.id = `contactRowWrapper_${c.ID}`;
+						
+						// Profile Initials
+						const profile = document.createElement('div');
+						profile.className = 'contactProfileCircle';
+						const initials = (c.FirstName?.[0] || '') + (c.LastName?.[0] || '');
+						profile.textContent = initials.toUpperCase();
 
-					// Profile Initials
-					const profile = document.createElement('div');
-					profile.className = 'contactProfileCircle';
-					const initials = (c.FirstName?.[0] || '') + (c.LastName?.[0] || '');
-					profile.textContent = initials.toUpperCase();
+						// Card container
+						const responsiveContainer = document.createElement('div');
+						responsiveContainer.className = 'responsiveContainer';
 
-					// Card container
-					const responsiveContainer = document.createElement('div');
-					responsiveContainer.className = 'responsiveContainer';
+						const card = document.createElement('div');
+						card.className = 'contactCard';
 
-					const card = document.createElement('div');
-					card.className = 'contactCard';
+						const info = document.createElement('div');
+						info.className = 'contactInfo';
+						info.innerHTML = `
+						<h3>${c.FirstName} ${c.LastName}</h3>
+						<p>${c.Phone}</p>
+						<p>${c.Email}</p>
+						`;
 
-					const info = document.createElement('div');
-					info.className = 'contactInfo';
-					info.innerHTML = `
-					<h3>${c.FirstName} ${c.LastName}</h3>
-					<p>${c.Phone}</p>
-					<p>${c.Email}</p>
-					`;
+						card.appendChild(info);
+						responsiveContainer.appendChild(card);
 
-					card.appendChild(info);
-					responsiveContainer.appendChild(card);
+						// Buttons
+						const actions = document.createElement('div');
+						actions.className = 'contactActions';
+						actions.innerHTML = `
+						<button onclick="modifyContact(${c.ID})">
+							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+						</button>
+						<button onclick="handleOpenDeleteContactModal(${c.ID})">
+							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
+						</button>
+						`;
 
-					// Buttons
-					const actions = document.createElement('div');
-					actions.className = 'contactActions';
-					actions.innerHTML = `
-					<button onclick="modifyContact(${c.ID})">
-						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
-					</button>
-					<button onclick="handleOpenDeleteContactModal(${c.ID})">
-						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
-					</button>
-					`;
-
-					// Append all
-					wrapper.appendChild(profile);
-					wrapper.appendChild(responsiveContainer);
-					wrapper.appendChild(actions);
-					contactFlex.appendChild(wrapper);
-				});
+						// Append all
+						wrapper.appendChild(profile);
+						wrapper.appendChild(responsiveContainer);
+						wrapper.appendChild(actions);
+						contactFlex.appendChild(wrapper);
+					});
 				};
 			}
 			xhr.send(jsonPayload);
@@ -411,6 +411,7 @@
 				contacts.forEach(c => {
 					const wrapper = document.createElement('div');
 					wrapper.className = 'contactRowWrapper';
+					wrapper.id = `contactRowWrapper_${c.ID}`;
 
 					// Profile Initials
 					const profile = document.createElement('div');
@@ -590,6 +591,7 @@
 				contacts.forEach(c => {
 					const wrapper = document.createElement('div');
 					wrapper.className = 'contactRowWrapper';
+					wrapper.id = `contactRowWrapper_${c.ID}`;
 
 					// Profile Initials
 					const profile = document.createElement('div');
@@ -706,44 +708,91 @@
 		else
 		{
 
-		changedFistName = document.getElementById("modifyContactFirstName").value;
-		changedLastName = document.getElementById("modifyContactLastName").value;
-		changedPhone = document.getElementById("modifyContactPhone").value;
-		changedEmail = document.getElementById("modifyContactEmail").value;
+			changedFistName = document.getElementById("modifyContactFirstName").value;
+			changedLastName = document.getElementById("modifyContactLastName").value;
+			changedPhone = document.getElementById("modifyContactPhone").value;
+			changedEmail = document.getElementById("modifyContactEmail").value;
 
+			clearAllAddContactValidators();
+			let isAllInputValid = true;
 
-		let tmp = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}; // Ensure contactId is valid here
-		console.log(tmp);
-		let jsonPayload = JSON.stringify(tmp);
-		let url = urlBase + '/ModifyContact.' + extension;
-
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-		try
-		{
-				xhr.onreadystatechange = function() 
-				{
-					if (this.readyState == 4 && this.status == 200) 
-					{
-						let jsonObject = JSON.parse( xhr.responseText );
-						
-						console.log("Response from PHP:", jsonObject); //Php debugging
-
-						//ADD Toast here if successfull
-					}
-				};
-				xhr.send(jsonPayload);
-			}
-			catch(err)
+			//Validate first name input
+			if(changedFistName == null || changedFistName == "") 
 			{
-				//document.getElementById("contactSearchResult").innerHTML = err.message;
+				isAllInputValid = false;
+				document.getElementById("modifyFirstNameValidatorText").classList.remove("hideText");
+			}
+			
+			//Validate last name input
+			if(changedLastName == null || changedLastName == "")
+			{
+				isAllInputValid = false;
+				document.getElementById("modifyLastNameValidatorText").classList.remove("hideText");
+			}
+			
+			// Validate phone number
+			if(!isNaN(Number(changedPhone)) == false || changedPhone.length != 10 || changedPhone == null || changedPhone == "") 
+			{
+				isAllInputValid = false;
+				document.getElementById("modifyPhoneNumberValidatorText").classList.remove("hideText");
 			}
 
-		currentEditContactID = -1;
+			//Validate parts around "@" in email
+			if(changedEmail == null || changedEmail == "" || changedEmail.includes("@") == false || changedEmail.split("@")[0].length <= 0 || changedEmail.split("@")[1].length <= 0)
+			{
+				isAllInputValid = false;
+				document.getElementById("modifyEmailValidatorText").classList.remove("hideText");
+			}else
 
-		handleCloseModifyContactModal();
+			//Vlaidate parts around the "." in email
+			if(changedEmail.split("@")[1].includes(".") == false || changedEmail.split("@")[1].split(".")[0].length <= 0 || changedEmail.split("@")[1].split(".")[1].length <= 0)
+			{
+				isAllInputValid = false;
+				document.getElementById("modifyEmailValidatorText").classList.remove("hideText");
+			}
+
+			if(!isAllInputValid){
+				console.log("Invalid Input");
+				return;
+			}
+
+			let tmp = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}; // Ensure contactId is valid here
+			console.log(tmp);
+			let jsonPayload = JSON.stringify(tmp);
+			let url = urlBase + '/ModifyContact.' + extension;
+
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+			try
+			{
+					xhr.onreadystatechange = function() 
+					{
+						if (this.readyState == 4 && this.status == 200) 
+						{
+							let jsonObject = JSON.parse( xhr.responseText );
+							
+							console.log("Response from PHP:", jsonObject); //Php debugging
+
+							//ADD Toast here if successfull
+							//add new data to html
+							document.querySelector(`contactRowWrapper_${currentEditContactID} > .contactInfo > h3`).innerHTML = jsonObject.FirstName + " " + jsonObject.LastName;
+							document.querySelector(`contactRowWrapper_${currentEditContactID} > .contactInfo > p:nth-child(2)`).innerHTML = jsonObject.Phone;
+							document.querySelector(`contactRowWrapper_${currentEditContactID} > .contactInfo > p:nth-child(3)`).innerHTML = jsonObject.Email;
+
+						}
+					};
+					xhr.send(jsonPayload);
+				}
+				catch(err)
+				{
+					//document.getElementById("contactSearchResult").innerHTML = err.message;
+				}
+
+			currentEditContactID = -1;
+
+			handleCloseModifyContactModal();
 
 		}
 
@@ -769,29 +818,32 @@
 
 		try
 		{
-				xhr.onreadystatechange = function() 
-				{
-					if (this.readyState == 4 && this.status == 200) 
-					{
-						let jsonObject = JSON.parse( xhr.responseText );
-						
-						console.log("Response from PHP:", jsonObject); //Php debugging
-
-						//ADD Toast here if successfull
-					}
-				};
-				xhr.send(jsonPayload);
-			}
-			catch(err)
+			xhr.onreadystatechange = function() 
 			{
-				//document.getElementById("contactSearchResult").innerHTML = err.message;
-				console.log("error", err);
-			}
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					let jsonObject = JSON.parse( xhr.responseText );
+					
+					console.log("Response from PHP:", jsonObject); //Php debugging
 
-			
+					//ADD Toast here if successfull
+				}
+			};
+			xhr.send(jsonPayload);
+		}
+		catch(err)
+		{
+			//document.getElementById("contactSearchResult").innerHTML = err.message;
+			console.log("error", err);
+		}
+
+		//Removes the HTML element of the contact
+		let contactRowWrapper = document.getElementById(`contactRowWrapper_${currentEditContactID}`);
+		if(contactRowWrapper){
+			contactRowWrapper.remove();
+		}
 
 		currentEditContactID = -1;
-		console.log(currentEditContactID);
 		handleCloseDeleteContactModal();
 	}
 
