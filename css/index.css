@@ -313,3 +313,41 @@ main {
 .hideText {
   opacity: 0;
 }
+
+
+#ButtonContainer{
+  display: flex;
+
+  .PaginationBnt{
+    button{
+      width: 40px;
+      height: 40px;
+      background-color: #57e2e540;
+      border: none;
+      margin: 0 5px;
+      &:hover{
+        background-color: #3abcbe;
+        cursor: pointer;
+      }
+    }
+
+    .arrow{
+      background-color: #3abcbe;
+    }
+
+    .selectedPaginationButton{
+      background-color: #3abcbe;
+    }
+    
+    .off{
+      background-color: #a4a4a4;
+      cursor: not-allowed;
+
+      &:hover{
+        background-color: #a4a4a4;
+        cursor: not-allowed;;
+      }
+    }
+    
+  }
+}

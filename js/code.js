@@ -8,6 +8,8 @@
 
 	let firstSignOn = -1;
 
+	let paginationCurrentPage = 1;
+
 	function goToSignup()
 	{
 		window.location.href = "signup.html";
@@ -466,30 +468,63 @@
 
 	function doPagination(numOfPages,size)
     {
-     
-                let buttonContinerElement = document.querySelector("#ButtonContainer");
+		
+		let buttonContinerElement = document.querySelector("#ButtonContainer");
 
-                let btnHtml = "";
+		let btnHtml = "";
+
+		btnHtml+= `<div class="PaginationBnt">
+			<button type="button" id="pageBtnLeft" class="buttons arrow off" onclick="paginateLeft()">&larr;</button>
+		</div>`
+
+		for(let i=0; i<numOfPages; i++)
+		{
+			//btnHtml += `<div data-num="${i+1}" class="PaginationBnt">${i+1} </div>`
+			btnHtml += `<div data-num="${i+1}" class="PaginationBnt">
+			<button type="button" id="pageBtn${i+1}" class="buttons isPageNum" onclick="determinContacts(${i+1},${numOfPages}, ${size})">${i+1}</button>
+			</div>`
+		}
+		btnHtml+= `<div class="PaginationBnt">
+			<button type="button" id="pageBtnRight" class="buttons arrow ${numOfPages>1?"":"off"}" onclick="paginateRight()">&rarr;</button>
+		</div>`
 
 
-                for(let i=0; i<numOfPages; i++)
-                {
-                    //btnHtml += `<div data-num="${i+1}" class="PaginationBnt">${i+1} </div>`
-                    btnHtml += `<div data-num="${i+1}" class="PaginationBnt">
-                    <button type="button" id="pageBtn" class="buttons" onclick="determinContacts(${i+1},${numOfPages}, ${size})">${i+1}</button>
-                    </div>`
-                }
+		buttonContinerElement.innerHTML = btnHtml;   
 
-                buttonContinerElement.innerHTML = btnHtml;   
-
-				if(firstSignOn == -1)
-				{
-					determinContacts(1,numOfPages,size);
-				}
+		if(firstSignOn == -1)
+		{
+			determinContacts(1,numOfPages,size);
+		}
     }
 
      function determinContacts(currentPageID, numOfPages, size)
-    {
+    {	
+		//remove all seletc button styles
+		let allButtons = document.querySelectorAll(".selectedPaginationButton");
+		allButtons.forEach(button => {
+			button.classList.remove("selectedPaginationButton");
+		});
+
+		//Update Paguination buttons
+		let selectedButtonEl = document.getElementById(`pageBtn${currentPageID}`);
+		selectedButtonEl.classList.add("selectedPaginationButton"); //set to selected button
+
+		//set all arrows to default
+		let allOffArrowButtons = document.querySelectorAll(".off");
+		allOffArrowButtons.forEach(button => {
+			button.classList.remove("off");
+		});
+
+		//Check left and right arrow buttons
+		if(currentPageID == 1){
+			let leftArrowEl = document.getElementById(`pageBtnLeft`);
+			leftArrowEl.classList.add("off");
+		}else if(currentPageID == numOfPages){
+			let rightArrowEl = document.getElementById(`pageBtnRight`);
+			rightArrowEl.classList.add("off");
+		}
+
+
         indexStart = 0;
         indexEnd = 0
         if(currentPageID == numOfPages)
