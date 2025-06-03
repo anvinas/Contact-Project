@@ -353,3 +353,10 @@ main {
     
   }
 }
+
+.contactAddResult {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #FF4ECD;
+  text-align: center;
+}

@@ -407,3 +407,21 @@ input::placeholder {
     box-shadow: 0 0 0 0 #850b5c00;
   }
 }
+
+.githubLink{
+  color: #56f6ff;
+  text-decoration: underline;
+  cursor: pointer;
+
+  position: absolute;
+  /* transform: translate(-50%, -50%); */
+  top: -50px;
+  left: 0;
+  transition: all 0.3s ease;
+
+  &:hover{
+    color: #2eb4bb;
+    cursor: pointer;
+  }
+    font-size: 20px;
+}
