@@ -52,11 +52,19 @@
 
     <div class="cassette-container">
         <div id="cassette-main" class="cassette-main">
-            <img class="cassette" src="public/cassetteAssets/cassette.png" id="cassette" alt="Cassette Image">
-            <img class="leftWheel" src="public/cassetteAssets/wheel.png"  alt="Cassette Wheel">
-            <img class="rightWheel" src="public/cassetteAssets/wheel.png"  alt="Cassette Wheel">
-            <img class="leftWave" src="public/cassetteAssets/leftWave.gif"  alt="Wave">
-            <img class="rightWave" src="public/cassetteAssets/rightWave.gif"  alt="Wave">
+            <img height="566" width="900" class="cassette" src="public/cassetteAssets/cassetteWebp.webp" id="cassette" alt="Cassette Image">
+            <img class="leftWheel" src="public/cassetteAssets/wheelWebp.png"  alt="Cassette Wheel">
+            <img class="rightWheel" src="public/cassetteAssets/wheelWebp.png"  alt="Cassette Wheel">
+           <video class="leftWave leftVideo" loop autoplay muted aria-hidden="true">
+                <source src="public/cassetteAssets/leftWaveWEB.webm" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+
+            <video class="rightWave leftVideo" loop autoplay muted aria-hidden="true">
+                <source src="public/cassetteAssets/rightWaveWEB.webm" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+
             <div class="header name-flash">Retro-Reach</div>
             <div class="buttonsContainer">
                 <div class="signupBtn" onclick="openSignupModal()">Signup</div>
