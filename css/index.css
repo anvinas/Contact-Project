@@ -109,7 +109,7 @@ main {
 /* Profile picture - floated absolutely to the left */
 .contactProfileCircle {
   position: absolute;
-  left: -70px;
+  left: 0px;
   top: 50%;
   transform: translateY(-50%);
   width: 60px;
@@ -153,6 +153,10 @@ main {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
+}
+
+.contactInfo >*{
+  margin: 5px 0;
 }
 
 .contactActions button:hover {

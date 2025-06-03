@@ -349,10 +349,10 @@
 						const actions = document.createElement('div');
 						actions.className = 'contactActions';
 						actions.innerHTML = `
-						<button onclick="modifyContact(${c.ID})">
+						<button aria-label="modify button" onclick="modifyContact(${c.ID})">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
 						</button>
-						<button onclick="handleOpenDeleteContactModal(${c.ID})">
+						<button aria-label="delete button" onclick="handleOpenDeleteContactModal(${c.ID})">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
 						</button>
 						`;
@@ -445,10 +445,10 @@
 					const actions = document.createElement('div');
 					actions.className = 'contactActions';
 					actions.innerHTML = `
-					<button onclick="modifyContact(${c.ID})">
+					<button aria-label="modify button" onclick="modifyContact(${c.ID})">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
 					</button>
-					<button onclick="handleOpenDeleteContactModal(${c.ID})">
+					<button aria-label="delete button" onclick="handleOpenDeleteContactModal(${c.ID})">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
 					</button>
 					`;
@@ -480,18 +480,18 @@
 		let btnHtml = "";
 
 		btnHtml+= `<div class="PaginationBnt">
-			<button type="button" id="pageBtnLeft" class="buttons arrow off" onclick="paginateLeft(${numOfPages},${size})">&larr;</button>
+			<button aria-label="left pagination button" type="button" id="pageBtnLeft" class="buttons arrow off" onclick="paginateLeft(${numOfPages},${size})">&larr;</button>
 		</div>`
 
 		for(let i=0; i<numOfPages; i++)
 		{
 			//btnHtml += `<div data-num="${i+1}" class="PaginationBnt">${i+1} </div>`
 			btnHtml += `<div data-num="${i+1}" class="PaginationBnt">
-			<button type="button" id="pageBtn${i+1}" class="buttons isPageNum" onclick="determinContacts(${i+1},${numOfPages}, ${size})">${i+1}</button>
+			<button aria-label="page number ${i+1} button"  type="button" id="pageBtn${i+1}" class="buttons isPageNum" onclick="determinContacts(${i+1},${numOfPages}, ${size})">${i+1}</button>
 			</div>`
 		}
 		btnHtml+= `<div class="PaginationBnt">
-			<button type="button" id="pageBtnRight" class="buttons arrow ${numOfPages>1?"":"off"}" onclick="paginateRight(${numOfPages},${size})">&rarr;</button>
+			<button aria-label="right pagination button" type="button" id="pageBtnRight" class="buttons arrow ${numOfPages>1?"":"off"}" onclick="paginateRight(${numOfPages},${size})">&rarr;</button>
 		</div>`
 
 
@@ -625,10 +625,10 @@
 					const actions = document.createElement('div');
 					actions.className = 'contactActions';
 					actions.innerHTML = `
-					<button onclick="modifyContact(${c.ID})">
+					<button aria-label="modify button" onclick="modifyContact(${c.ID})">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
 					</button>
-					<button onclick="handleOpenDeleteContactModal(${c.ID})">
+					<button aria-label="delete button" onclick="handleOpenDeleteContactModal(${c.ID})">
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
 					</button>
 					`;
