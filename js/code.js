@@ -6,6 +6,10 @@
 	let lastName = "";
 	let currentEditContactID = -1;
 
+	//editedDataLast
+	let lastSentEditedData = {}
+
+
 	let firstSignOn = -1;
 
 	let paginationCurrentPage = 1;
@@ -757,6 +761,7 @@
 			}
 
 			let tmp = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}; // Ensure contactId is valid here
+			lastSentEditedData = {firstName: changedFistName, lastName: changedLastName, phone: changedPhone, email: changedEmail, contactId: currentEditContactID}
 			console.log(tmp);
 			let jsonPayload = JSON.stringify(tmp);
 			let url = urlBase + '/ModifyContact.' + extension;
@@ -777,9 +782,9 @@
 
 							//ADD Toast here if successfull
 							//add new data to html
-							document.querySelector(`#contactRowWrapper_${currentEditContactID}  h3`).innerHTML = changedFistName + " " + changedLastName;
-							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(2)`).innerHTML = changedPhone;
-							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(3)`).innerHTML = changedEmail;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  h3`).innerHTML = lastSentEditedData.firstName + " " + lastSentEditedData.lastName;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(2)`).innerHTML = lastSentEditedData.phone;
+							document.querySelector(`#contactRowWrapper_${currentEditContactID}  .contactInfo > p:nth-child(3)`).innerHTML = lastSentEditedData.email;
 
 						}
 					};
