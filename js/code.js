@@ -173,6 +173,8 @@
 		}
 		else
 		{
+			console.log("First Name: " + firstName);
+			console.log("Last Name: " + lastName);
 			document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 			displayFirstFourContacts();
 		}
