@@ -317,14 +317,15 @@ main {
 
 #ButtonContainer{
   display: flex;
-
+  align-items: center;
+  justify-content: center;
   .PaginationBnt{
     button{
       width: 40px;
       height: 40px;
       background-color: #57e2e540;
       border: none;
-      margin: 0 5px;
+      margin: 0 6px;
       &:hover{
         background-color: #3abcbe;
         cursor: pointer;
@@ -338,7 +339,7 @@ main {
     .selectedPaginationButton{
       background-color: #3abcbe;
     }
-    
+
     .off{
       background-color: #a4a4a4;
       cursor: not-allowed;

@@ -474,7 +474,7 @@
 		let btnHtml = "";
 
 		btnHtml+= `<div class="PaginationBnt">
-			<button type="button" id="pageBtnLeft" class="buttons arrow off" onclick="paginateLeft()">&larr;</button>
+			<button type="button" id="pageBtnLeft" class="buttons arrow off" onclick="paginateLeft(${numOfPages},${size})">&larr;</button>
 		</div>`
 
 		for(let i=0; i<numOfPages; i++)
@@ -485,7 +485,7 @@
 			</div>`
 		}
 		btnHtml+= `<div class="PaginationBnt">
-			<button type="button" id="pageBtnRight" class="buttons arrow ${numOfPages>1?"":"off"}" onclick="paginateRight()">&rarr;</button>
+			<button type="button" id="pageBtnRight" class="buttons arrow ${numOfPages>1?"":"off"}" onclick="paginateRight(${numOfPages},${size})">&rarr;</button>
 		</div>`
 
 
@@ -496,9 +496,26 @@
 			determinContacts(1,numOfPages,size);
 		}
     }
+	
+	function paginateLeft(numOfPages, size){
+		if(paginationCurrentPage > 1)
+		{
+			paginationCurrentPage--;
+			determinContacts(paginationCurrentPage,numOfPages, size);
+		}
+	}
+	
+	function paginateRight(numOfPages, size){
+		if(paginationCurrentPage < numOfPages){
+			paginationCurrentPage++;
+			determinContacts(paginationCurrentPage,numOfPages, size);
+		}
+	}
 
      function determinContacts(currentPageID, numOfPages, size)
     {	
+		paginationCurrentPage = currentPageID;
+
 		//remove all seletc button styles
 		let allButtons = document.querySelectorAll(".selectedPaginationButton");
 		allButtons.forEach(button => {
