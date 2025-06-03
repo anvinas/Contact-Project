@@ -58,15 +58,21 @@ main {
 
 
 .responsiveContainer {
-  max-width: 1000px;
   width: 100%;
-  margin: 0 auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+.contactFlex .responsiveContainer{
+    width: 90%;
+
 }
 
 #createContactButton {
   display: block;
-  margin: 40px auto 30px auto;
+  margin: 30px 0;
   padding: 12px 20px;
   background-color: #57E2E5;
   color: #153131;
@@ -83,14 +89,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   margin-bottom: 5px;
   padding: 12px 20px;
 }
 
 
 .contactCard {
-  width: 104%;
   padding: 16px 20px;
   background-color: #1f1f2e;
   border-radius: 20px;
@@ -99,6 +103,7 @@ main {
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-sizing: border-box;
   padding: 12px 20px;
+  width: 90%;
 }
 
 .contactCard:hover {
@@ -108,10 +113,6 @@ main {
 
 /* Profile picture - floated absolutely to the left */
 .contactProfileCircle {
-  position: absolute;
-  left: -70px;
-  top: 50%;
-  transform: translateY(-50%);
   width: 60px;
   height: 60px;
   background-color: #FF4ECD;
@@ -129,10 +130,6 @@ main {
 
 /* Action buttons - floated absolutely to the right */
 .contactActions {
-  position: absolute;
-  right: -70px;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -153,6 +150,10 @@ main {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
+}
+
+.contactInfo >*{
+  margin: 5px 0;
 }
 
 .contactActions button:hover {
@@ -312,4 +313,53 @@ main {
 
 .hideText {
   opacity: 0;
+}
+
+
+#ButtonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .PaginationBnt{
+    button{
+      width: 40px;
+      height: 40px;
+      background-color: #57e2e540;
+      border: none;
+      margin: 0 6px;
+      &:hover{
+        background-color: #3abcbe;
+        cursor: pointer;
+      }
+    }
+
+    .arrow{
+      background-color: #3abcbe;
+    }
+
+    .selectedPaginationButton{
+      background-color: #3abcbe;
+    }
+
+    .off{
+      background-color: #a4a4a4;
+      cursor: not-allowed;
+
+      &:hover{
+        background-color: #a4a4a4;
+        cursor: not-allowed;;
+      }
+    }
+    
+  }
+}
+
+#contactAddResult {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #FF4ECD;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
