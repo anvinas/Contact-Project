@@ -790,7 +790,6 @@
 					//document.getElementById("contactSearchResult").innerHTML = err.message;
 				}
 
-			currentEditContactID = -1;
 
 			handleCloseModifyContactModal();
 
@@ -843,7 +842,6 @@
 			contactRowWrapper.remove();
 		}
 
-		currentEditContactID = -1;
 		handleCloseDeleteContactModal();
 	}
 
