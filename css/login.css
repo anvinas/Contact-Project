@@ -42,8 +42,8 @@ body{
 .loginWrapper,.signupWrapper{
     z-index: 5;
     position: absolute;
-    top:0;
-    left: -5px;
+    top:-12px;
+    left: -12px;
     height: 101vh;
     width: 101vw;
     background-color: hsl(0deg 0% 0% / 63%);
