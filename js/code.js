@@ -151,6 +151,7 @@
 		for(var i = 0; i < splits.length; i++) 
 		{
 			let thisOne = splits[i].trim();
+
 			let tokens = thisOne.split("=");
 			if( tokens[0] == "firstName" )
 			{
